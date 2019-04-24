@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputScript library="js" name="bootstrap.js" />
+        <title>Saat</title>
+    </h:head>
+    <h:body >
+
+        <ui:composition template="/template/layout.xhtml">
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h:form id="ajax-table">
+                                <h:dataTable  rendered="#{userController.yetki.read}" value="#{saatController.getaList()}" var="aSaat" styleClass="table table-stripped">
+                                    <h:column>
+                                        <f:facet name="header">ID</f:facet>
+                                            #{aSaat.id}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Saat</f:facet>
+                                        <h:commandLink action="#{saatController.updateForm(aSaat)}" value="#{aSaat.saat}" >
+                                            <f:ajax execute="@this" render="template-form:ajax-form"/>
+                                        </h:commandLink>
+
+                                    </h:column>
+                                
+
+                                    <h:column>
+                                        <f:facet name="header">DELETE</f:facet>
+
+                                        <h:commandButton styleClass="btn btn-danger"  disabled="#{!userController.yetki.delete}" action="#{saatController.delete(aSaat)}" value="Delete" />
+
+                                    </h:column>
+                                </h:dataTable>
+                            </h:form>
+                        </div>
+
+
+                        <div class="col-md-6" >
+                            <h:form id="ajax-form">
+                                <div class="form-group">
+                                    <h:inputHidden value="#{saatController.saat.id}"/>
+                                    <label for="inputName">Saat Adi</label>
+                                    <h:inputText styleClass="form-control" value="#{saatController.saat.saat}"/> <br/>
+                                </div>
+                                <div class="form-group">
+                                    <h:commandButton styleClass="btn btn-primary" disabled="#{!userController.yetki.update}" rendered="#{saatController.saat.id!=0}" value="Update" action="#{saatController.update}">
+                                        <f:ajax execute="ajax-form" render="template-form"/>
+                                    </h:commandButton>
+                                    
+                                    <h:commandButton styleClass="btn btn-primary" disabled="#{!userController.yetki.create}" rendered="#{saatController.saat.id==0}" value="Create" action="#{saatController.create}">  
+                                        <f:ajax execute="ajax-form" render="template-form"/>
+                                    </h:commandButton>
+                                    
+                                    <h:commandButton styleClass="btn btn-secondary" rendered="#{saatController.saat.id!=0}" value="Clear" action="#{saatController.clearForm}">  
+                                        <f:ajax execute="ajax-form" render="template-form"/>
+                                    </h:commandButton>
+                                </div>
+                            </h:form>
+                        </div>
+
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+
+</html>
+

@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputScript library="js" name="bootstrap.js" />
+        <title>User</title>
+    </h:head>
+    <h:body >
+
+        <ui:composition template="/template/layout.xhtml">
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h:form id="ajax-table">
+                                <h:dataTable  rendered="#{userController.yetki.read}" value="#{userController.getaList()}" var="aUser" styleClass="table table-stripped">
+                                    <h:column>
+                                        <f:facet name="header">ID</f:facet>
+                                            #{aUser.id}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">İsim</f:facet>
+                                        <h:commandLink action="#{userController.updateForm(aUser)}" value="#{aUser.isim}" >
+                                            <f:ajax execute="@this" render="template-form:ajax-form"/>
+                                        </h:commandLink>
+
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Bakiye</f:facet>
+                                            #{aUser.bakiye}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Eğitim Düzeyi</f:facet>
+                                            #{aUser.egitimDuzeyi}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Email</f:facet>
+                                            #{aUser.email}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Meslek</f:facet>
+                                            #{aUser.meslek}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Okul Durumu</f:facet>
+                                            #{aUser.okulDurumu}
+                                    </h:column>
+                                    <c:if test="#{userController.superAdmin}">
+                                        <h:column>
+                                            <f:facet name="header" >Şifre</f:facet>
+                                                #{aUser.password}
+                                        </h:column>
+                                    </c:if>
+                                    <h:column>
+                                        <f:facet name="header">Şehir</f:facet>
+                                            #{aUser.sehir}
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Diğer</f:facet>
+                                            #{aUser.diger}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Grup</f:facet>
+                                        <ui:repeat value="#{aUser.grup}" var="grp">
+                                            <ul>
+                                                <li>#{grp.adi}</li>
+                                            </ul>
+                                        </ui:repeat>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">DELETE</f:facet>
+
+                                        <h:commandButton styleClass="btn btn-danger"  disabled="#{!userController.superAdmin}" action="#{userController.delete(aUser)}" value="Delete" />
+
+                                    </h:column>
+                                </h:dataTable>
+                            </h:form>
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <h:form id="ajax-form">
+                                <div class="form-group">
+                                    <h:inputHidden value="#{userController.user.id}"/>
+                                    <label for="inputName">User İsim</label>
+                                    <h:inputText styleClass="form-control" value="#{userController.user.isim}"/> <br/>
+                                    <label for="inputName">Bakiye</label>
+                                    <h:inputText styleClass="form-control" value="#{userController.user.bakiye}"/> <br/>
+                                    <label for="inputName">Diğer</label>
+                                    <h:inputText styleClass="form-control" value="#{userController.user.diger}"/> <br/>
+                                    <label for="inputName">Eğitim Düzeyi</label>
+                                    <h:inputText styleClass="form-control" value="#{userController.user.egitimDuzeyi}"/> <br/>
+                                    <label for="inputName">Email</label>
+                                    <h:inputText styleClass="form-control" value="#{userController.user.email}"/> <br/>
+                                    <label for="inputName">Meslek</label>
+                                    <h:inputText styleClass="form-control" value="#{userController.user.meslek}"/> <br/>
+                                    <label for="inputName">Okul Durumu</label>
+                                    <h:inputText styleClass="form-control" value="#{userController.user.okulDurumu}"/> <br/>
+                                    <label for="inputName">Sifre</label>
+                                    <h:inputSecret styleClass="form-control" value="#{userController.user.password}"/> <br/>
+                                    <label for="inputName">Sehir</label>
+                                    <h:inputText styleClass="form-control" value="#{userController.user.sehir}"/> <br/>
+                                    <label for="inputName">Telefon</label>
+                                    <h:inputText styleClass="form-control" value="#{userController.user.telefon}"/> <br/>
+                                    <label for="inputName">Grup</label>
+                                    <h:selectManyMenu styleClass="custom-select" value="#{userController.user.grup}" converter="grupConverter">
+
+                                        <f:selectItems value="#{grupController.getaList()}" var="grup" itemValue="#{grup}" itemLabel="#{grup.adi}"/>
+
+                                    </h:selectManyMenu>
+                                </div>
+                                <div class="form-group">
+                                    <h:commandButton styleClass="btn btn-primary" disabled="#{!userController.superAdmin}" rendered="#{userController.user.id!=0}" value="Update" action="#{userController.update}">
+                                        <f:ajax execute="@form" render="template-form"/>
+                                    </h:commandButton>
+
+                                    <h:commandButton styleClass="btn btn-primary"  disabled="#{!userController.superAdmin}" rendered="#{userController.user.id==0}" value="Create" action="#{userController.create}">
+                                        <f:ajax execute="@form" render="template-form"/>
+                                    </h:commandButton>
+
+
+                                    <h:commandButton styleClass="btn btn-secondary" rendered="#{userController.user.id!=0}" value="Clear" action="#{userController.clearForm}">  
+                                        <f:ajax execute="@form" render="template-form"/>
+                                    </h:commandButton>
+                                </div>
+                            </h:form>
+                        </div>
+
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+
+</html>
+
