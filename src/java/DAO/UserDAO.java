@@ -53,7 +53,7 @@ public class UserDAO {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             rs.next();
-            this.user = new User(rs.getInt("id"), rs.getString("telefon"), rs.getString("isim"), rs.getString("sehir"), rs.getString("email"), rs.getString("egitim_duzeyi"), rs.getString("okul_durumu"), rs.getDate("uyelik_tarihi"), rs.getString("meslek"), rs.getString("diger"), rs.getString("password"), gDao.geUserGrup(rs.getInt("id")));
+            this.user = new User(rs.getInt("id"),rs.getInt("bakiye"), rs.getString("telefon"), rs.getString("isim"), rs.getString("sehir"), rs.getString("email"), rs.getString("egitim_duzeyi"), rs.getString("okul_durumu"), rs.getDate("uyelik_tarihi"), rs.getString("meslek"), rs.getString("diger"), rs.getString("password"), gDao.geUserGrup(rs.getInt("id")));
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

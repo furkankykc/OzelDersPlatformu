@@ -33,6 +33,7 @@ public class SessionUtils {
         if (user != null) {
             session.setAttribute("user", user);
             setUserId(user);
+            isAdmin();
         }
     }
 
@@ -54,13 +55,17 @@ public class SessionUtils {
                         || yetki.isRead()
                         || yetki.isUpdate()
                         || yetki.isDelete()) {
+                    session.setAttribute("isAdmin", 1);
                     return true;
                 }
             }
 
         }
+
+        session.setAttribute("isAdmin", 0);
         return false;
     }
+
     public static Boolean isSuperAdmin() {
         HttpSession session = getSession();
         if (SessionUtils.getUser() != null) {

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(filterName = "loginFilter", urlPatterns = {"faces/admin/*"})
+@WebFilter(filterName = "loginFilter", urlPatterns = {"/faces/admin/*"})
 public class LoginFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -22,21 +22,28 @@ public class LoginFilter implements Filter {
             HttpSession ses = reqt.getSession(false);
 
             String reqURI = reqt.getRequestURI();
-            if (SessionUtils.isAdmin() != null
-                    && (reqURI.indexOf("/login.xhtml") >= 0
-                    || (SessionUtils.isAdmin())
-                    || reqURI.indexOf("/frontend/") >= 0
-                    || reqURI.contains("javax.faces.resources"))) {
-                System.out.println("BEN FİLTRECİYİM FİLTRE YAPARIM");
-                chain.doFilter(request, response);
+             Boolean isAdmin= false;
+            if(ses!=null){
+                isAdmin= ((int) ses.getAttribute("isAdmin")) == 1;
+            }
+            System.out.println("amdin nerdesin = "+isAdmin);
+            if (
+                    reqURI.indexOf("/login.xhtml") >= 0
+                    ||isAdmin 
+                    || reqURI.indexOf("/public/") >= 0
+                    || reqURI.contains("javax.faces.resource")
+                    ) {
 
-            } else if (ses.getAttribute("userid") != null) {
-                 System.out.println("BEN FİLTRECİYİM FİLTRE 2YAPARIM");
-                resp.sendRedirect(reqt.getContextPath() + "/faces/index.xhtml");
-            } else {
-                 System.out.println("BEN FİLTRECİYİM FİLTRE YAPARI3M");
+                chain.doFilter(request, response);
+                
+            }else if(ses.getAttribute("user")!=null){
+               resp.sendRedirect(reqt.getContextPath() + "/faces/index.xhtml"); 
+            }
+            
+            else {
                 resp.sendRedirect(reqt.getContextPath() + "/faces/login.xhtml");
             }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

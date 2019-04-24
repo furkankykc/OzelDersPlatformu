@@ -119,7 +119,11 @@ public class UserController implements Serializable {
     }
 
     public Yetki getYetki() {
+       
         Yetki yetki = new Yetki(false, false, false, false, "");
+         if(Utility.SessionUtils.getUser().getGrup()==null){
+            return yetki;
+        }
         for (Grup grup : Utility.SessionUtils.getUser().getGrup()) {
             Yetki yetkiler = grup.getYetki();
             if (yetkiler.isCreate()) {
@@ -173,8 +177,8 @@ public class UserController implements Serializable {
     public String logout() {
         HttpSession session = SessionUtils.getSession();
         session.invalidate();
-//        this.user = null;
-        return "index.xhtml";
+        this.user = null;
+        return "/index.xhtml";
 
     }
 
@@ -214,7 +218,7 @@ public class UserController implements Serializable {
                 //bu user adi daha önce alınmıs
             }
         } else {
-            message = "User adi boş olamaz";
+            message = "Kullanici adi boş olamaz";
         }
         return "";
     }

@@ -17,30 +17,30 @@
         <ui:composition template="/template/common-layout.xhtml">
             <ui:define name="content">
               
-                <div class="container">
+<!--                <div class="container">
                     <div class="row">
                         <h:form id="yayin-table">
                             <div class="col-md-12">
 
-                                <h:dataTable  value="#{dersController.getaList()}" var="aDers" styleClass="table table-stripped">
+                                <h:dataTable  value="{dersController.getaList}" var="aDers" styleClass="table table-stripped">
                                     <h:column>
                                         <f:facet name="header">ID</f:facet>
-                                            #{aDers.id}
+                                            {aDers.id}
                                     </h:column>
                                     <h:column>
                                         <f:facet name="header">ADI</f:facet>
-                                        <h:commandLink action="#{dersController.updateForm(aDers)}" value="#{aDers.adi}" />
+                                        <h:commandLink action="{dersController.updateForm(aDers)}" value="{aDers.adi}" />
                                     </h:column>
                                     <h:column>
                                         <f:facet name="header">Ucret</f:facet>
-                                            #{aDers.ucret}
+                                            {aDers.ucret}
                                     </h:column>
                                 </h:dataTable>
 
                             </div>
                         </h:form>
                     </div>
-                </div>
+                </div>-->
             </ui:define>
         </ui:composition>
     </h:body>
