@@ -20,6 +20,18 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h:form id="ajax-table">
+                                     <div class="container">
+                                    <div class="form-check-inline">
+
+                                        <h:commandButton action="#{userController.previous}" value="Previous" styleClass="btn btn-outline-dark">
+                                            <f:ajax execute="@this" render="template-form"/>
+                                        </h:commandButton>
+                                        <h:outputLabel  value="#{userController.page} of #{userController.pageCount}" styleClass="text textArea"/>
+                                        <h:commandButton action="#{userController.next}" value="Next" styleClass="btn btn-outline-dark">
+                                            <f:ajax execute="@this" render="template-form"/>
+                                        </h:commandButton>
+                                    </div>
+                                </div>
                                 <h:dataTable  rendered="#{userController.yetki.read}" value="#{userController.getaList()}" var="aUser" styleClass="table table-stripped">
                                     <h:column>
                                         <f:facet name="header">ID</f:facet>

@@ -19,14 +19,26 @@
                     <div class="row">
                         <div class="col-md-6">
                             <h:form id="ajax-table">
-                                <h:dataTable  rendered="#{userController.yetki.read}" value="#{bransController.getaList()}" var="aBrans" styleClass="table table-stripped">
+                                     <div class="container">
+                                    <div class="form-check-inline">
+
+                                        <h:commandButton action="#{kategoriController.previous}" value="Previous" styleClass="btn btn-outline-dark">
+                                            <f:ajax execute="@this" render="template-form"/>
+                                        </h:commandButton>
+                                        <h:outputLabel  value="#{kategoriController.page} of #{kategoriController.pageCount}" styleClass="text textArea"/>
+                                        <h:commandButton action="#{kategoriController.next}" value="Next" styleClass="btn btn-outline-dark">
+                                            <f:ajax execute="@this" render="template-form"/>
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                                <h:dataTable  rendered="#{userController.yetki.read}" value="#{kategoriController.getaList()}" var="aBrans" styleClass="table table-stripped">
                                     <h:column>
                                         <f:facet name="header">ID</f:facet>
                                             #{aBrans.id}
                                     </h:column>
                                     <h:column>
                                         <f:facet name="header">ADİ</f:facet>
-                                        <h:commandLink action="#{bransController.updateForm(aBrans)}" value="#{aBrans.adi}" >
+                                        <h:commandLink action="#{kategoriController.updateForm(aBrans)}" value="#{aBrans.adi}" >
                                             <f:ajax execute="@this" render="template-form:ajax-form"/>
                                         </h:commandLink>
 
@@ -36,7 +48,7 @@
                                     <h:column>
                                         <f:facet name="header">DELETE</f:facet>
 
-                                        <h:commandButton styleClass="btn btn-danger" disabled="#{!userController.yetki.delete}" action="#{bransController.delete(aBrans)}" value="Delete" />
+                                        <h:commandButton styleClass="btn btn-danger" disabled="#{!userController.yetki.delete}" action="#{kategoriController.delete(aBrans)}" value="Delete" />
 
                                     </h:column>
                                 </h:dataTable>
@@ -47,20 +59,20 @@
                         <div class="col-md-6" >
                             <h:form id="ajax-form">
                                 <div class="form-group">
-                                    <h:inputHidden value="#{bransController.brans.id}"/>
+                                    <h:inputHidden value="#{kategoriController.kategori.id}"/>
                                     <label for="inputName">Brans Adi</label>
-                                    <h:inputText styleClass="form-control" value="#{bransController.brans.adi}"/> <br/>
+                                    <h:inputText styleClass="form-control" value="#{kategoriController.kategori.adi}"/> <br/>
                                 </div>
                                 <div class="form-group">
-                                    <h:commandButton styleClass="btn btn-primary" disabled="#{!userController.yetki.update}"  rendered="#{bransController.brans.id!=0}" value="Update" action="#{bransController.update}">
+                                    <h:commandButton styleClass="btn btn-primary" disabled="#{!userController.yetki.update}"  rendered="#{kategoriController.kategori.id!=0}" value="Update" action="#{kategoriController.update}">
                                         <f:ajax execute="ajax-form" render="template-form"/>
                                     </h:commandButton>
 
-                                    <h:commandButton styleClass="btn btn-primary" disabled="#{!userController.yetki.create}"  rendered="#{bransController.brans.id==0}" value="Create" action="#{bransController.create}">  
+                                    <h:commandButton styleClass="btn btn-primary" disabled="#{!userController.yetki.create}"  rendered="#{kategoriController.kategori.id==0}" value="Create" action="#{kategoriController.create}">  
                                         <f:ajax execute="ajax-form" render="template-form"/>
                                     </h:commandButton>
 
-                                    <h:commandButton styleClass="btn btn-secondary" rendered="#{bransController.brans.id!=0}" value="Clear" action="#{bransController.clearForm}">  
+                                    <h:commandButton styleClass="btn btn-secondary" rendered="#{kategoriController.kategori.id!=0}" value="Clear" action="#{kategoriController.clearForm}">  
                                         <f:ajax execute="ajax-form" render="template-form"/>
                                     </h:commandButton>
                                 </div>

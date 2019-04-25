@@ -19,6 +19,18 @@
                     <div class="row">
                         <div class="col-md-6">
                             <h:form id="ajax-table">
+                                <div class="container">
+                                    <div class="form-check-inline">
+
+                                        <h:commandButton action="#{dersController.previous}" value="Previous" styleClass="btn btn-outline-dark">
+                                            <f:ajax execute="@this" render="template-form"/>
+                                        </h:commandButton>
+                                        <h:outputLabel  value="#{dersController.page} of #{dersController.pageCount}" styleClass="text textArea"/>
+                                        <h:commandButton action="#{dersController.next}" value="Next" styleClass="btn btn-outline-dark">
+                                            <f:ajax execute="@this" render="template-form"/>
+                                        </h:commandButton>
+                                    </div>
+                                </div>
                                 <h:dataTable  rendered="#{userController.yetki.read}" value="#{dersController.getaList()}" var="aDers" styleClass="table table-stripped">
                                     <h:column>
                                         <f:facet name="header">ID</f:facet>
@@ -35,7 +47,7 @@
                                         <f:facet name="header">Ücret</f:facet>
                                             #{aDers.ucret}
                                     </h:column>
-                                
+
 
                                     <h:column>
                                         <f:facet name="header">DELETE</f:facet>
@@ -61,11 +73,11 @@
                                     <h:commandButton styleClass="btn btn-primary"  disabled="#{!userController.yetki.update}"  rendered="#{dersController.ders.id!=0}" value="Update" action="#{dersController.update}">
                                         <f:ajax execute="ajax-form" render="template-form"/>
                                     </h:commandButton>
-                                    
+
                                     <h:commandButton styleClass="btn btn-primary"  disabled="#{!userController.yetki.create}"  rendered="#{dersController.ders.id==0}" value="Create" action="#{dersController.create}">  
                                         <f:ajax execute="ajax-form" render="template-form"/>
                                     </h:commandButton>
-                                    
+
                                     <h:commandButton styleClass="btn btn-secondary" rendered="#{dersController.ders.id!=0}" value="Clear" action="#{dersController.clearForm}">  
                                         <f:ajax execute="ajax-form" render="template-form"/>
                                     </h:commandButton>

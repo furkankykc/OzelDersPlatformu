@@ -19,6 +19,18 @@
                     <div class="row">
                         <div class="col-md-6">
                             <h:form id="ajax-table">
+                                     <div class="container">
+                                    <div class="form-check-inline">
+
+                                        <h:commandButton action="#{yetkiController.previous}" value="Previous" styleClass="btn btn-outline-dark">
+                                            <f:ajax execute="@this" render="template-form"/>
+                                        </h:commandButton>
+                                        <h:outputLabel  value="#{yetkiController.page} of #{yetkiController.pageCount}" styleClass="text textArea"/>
+                                        <h:commandButton action="#{yetkiController.next}" value="Next" styleClass="btn btn-outline-dark">
+                                            <f:ajax execute="@this" render="template-form"/>
+                                        </h:commandButton>
+                                    </div>
+                                </div>
                                 <h:dataTable  rendered="#{userController.yetki.read}" value="#{yetkiController.getaList()}" var="aYetki" styleClass="table table-stripped">
 
                                     <h:column>
