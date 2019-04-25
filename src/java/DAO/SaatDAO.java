@@ -112,6 +112,19 @@ public class SaatDAO {
         }
     }
 
+    public void delete(Saat a) {
+        Connection con = ConnectionManager.getConnection();
+        String sql = "delete from saat where id=?";
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, a.getId());
+            st.executeUpdate();
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
     public void update(Saat a) {
         Connection con = ConnectionManager.getConnection();
 

@@ -25,13 +25,17 @@ public class GunController implements Serializable {
     private GunDAO gunDao;
     private Gun gun;
 
+    private int page = 1;
+    private int pageSize = 10;
+    private int pageCount;
+    
     public GunController() {
         this.gunList = new ArrayList<Gun>();
         this.gunDao = new GunDAO();
     }
 
     public List<Gun> getaList() {
-        this.gunList = getaDao().list();
+        this.gunList = getaDao().list(page,pageSize);
         return gunList;
     }
 
@@ -91,4 +95,45 @@ public class GunController implements Serializable {
 
     }
 
+    public void next() {
+        if (page < pageCount) {
+            this.page++;
+        }
+    }
+
+    public void previous() {
+        if (page > 1) {
+            this.page--;
+        }
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getPageCount() {
+        try {
+            this.pageCount = (int) Math.ceil(this.getaDao().count() / (double) this.pageSize);
+        } catch (Exception e) {
+            return 1;
+        }
+
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
 }

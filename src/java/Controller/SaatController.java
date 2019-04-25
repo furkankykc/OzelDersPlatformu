@@ -24,14 +24,17 @@ public class SaatController implements Serializable {
     private List<Saat> bransList;
     private SaatDAO bransDao;
     private Saat brans;
-
+    
+    private int page = 1;
+    private int pageSize = 10;
+    private int pageCount;
     public SaatController() {
         this.bransList = new ArrayList<Saat>();
         this.bransDao = new SaatDAO();
     }
 
     public List<Saat> getaList() {
-        this.bransList = getaDao().list();
+        this.bransList = getaDao().list(page,pageSize);
         return bransList;
     }
 
@@ -91,4 +94,45 @@ public class SaatController implements Serializable {
 
     }
 
+    public void next() {
+        if (page < pageCount) {
+            this.page++;
+        }
+    }
+
+    public void previous() {
+        if (page > 1) {
+            this.page--;
+        }
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getPageCount() {
+        try {
+            this.pageCount = (int) Math.ceil(this.getaDao().count() / (double) this.pageSize);
+        } catch (Exception e) {
+            return 1;
+        }
+
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
 }

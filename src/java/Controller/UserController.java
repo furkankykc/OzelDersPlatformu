@@ -30,6 +30,10 @@ public class UserController implements Serializable {
     private User user;
     private String passControll;
     private String message;
+    
+    private int page = 1;
+    private int pageSize = 10;
+    private int pageCount;
 
     public UserController() {
         this.userList = new ArrayList<User>();
@@ -37,7 +41,7 @@ public class UserController implements Serializable {
     }
 
     public List<User> getaList() {
-        this.userList = getaDao().list();
+        this.userList = getaDao().list(page,pageSize);
         return userList;
     }
 
@@ -119,9 +123,9 @@ public class UserController implements Serializable {
     }
 
     public Yetki getYetki() {
-       
+
         Yetki yetki = new Yetki(false, false, false, false, "");
-         if(Utility.SessionUtils.getUser().getGrup()==null){
+        if (Utility.SessionUtils.getUser().getGrup() == null) {
             return yetki;
         }
         for (Grup grup : Utility.SessionUtils.getUser().getGrup()) {
@@ -152,6 +156,7 @@ public class UserController implements Serializable {
     }
 
     public String login() {
+//        test.test.initializeDB();
         User user = this.getaDao().get(this.user.getEmail());
         message = "";
         if (user != null) {
@@ -221,6 +226,48 @@ public class UserController implements Serializable {
             message = "Kullanici adi boş olamaz";
         }
         return "";
+    }
+    
+    public void next() {
+        if (page < pageCount) {
+            this.page++;
+        }
+    }
+
+    public void previous() {
+        if (page > 1) {
+            this.page--;
+        }
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getPageCount() {
+        try {
+            this.pageCount = (int) Math.ceil(this.getaDao().count() / (double) this.pageSize);
+        } catch (Exception e) {
+            return 1;
+        }
+
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
     }
 
 }

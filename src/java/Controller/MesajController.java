@@ -24,6 +24,10 @@ public class MesajController implements Serializable {
     private List<Mesaj> mesajList;
     private MesajDAO mesajDao;
     private Mesaj mesaj;
+    
+    private int page = 1;
+    private int pageSize = 10;
+    private int pageCount;
 
     public MesajController() {
         this.mesajList = new ArrayList<Mesaj>();
@@ -31,7 +35,7 @@ public class MesajController implements Serializable {
     }
 
     public List<Mesaj> getaList() {
-        this.mesajList = getaDao().list();
+        this.mesajList = getaDao().list(page,pageSize);
         return mesajList;
     }
 
@@ -87,6 +91,48 @@ public class MesajController implements Serializable {
         clearForm();
         return "mesaj";
 
+    }
+    
+    public void next() {
+        if (page < pageCount) {
+            this.page++;
+        }
+    }
+
+    public void previous() {
+        if (page > 1) {
+            this.page--;
+        }
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getPageCount() {
+        try {
+            this.pageCount = (int) Math.ceil(this.getaDao().count() / (double) this.pageSize);
+        } catch (Exception e) {
+            return 1;
+        }
+
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
     }
 
 }

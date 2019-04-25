@@ -31,10 +31,11 @@ public class FileDAO {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if(rs.next())
+            if (rs.next()) {
                 this.file = new File(rs.getInt("id"), rs.getString("adi"), rs.getString("path"), rs.getString("type"));
-            else
+            } else {
                 this.file = null;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -95,6 +96,34 @@ public class FileDAO {
         }
     }
 
+    public void delete(File a) {
+        Connection con = ConnectionManager.getConnection();
+        String sql = "delete from file where id=?";
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, a.getId());
+            st.executeUpdate();
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public int count() {
+        int count = 0;
+        Connection con = ConnectionManager.getConnection();
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select count(id) as a_count from file");
+            rs.next();
+            count = rs.getInt("a_count");
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return count;
+    }
+
     public void update(File a) {
         Connection con = ConnectionManager.getConnection();
 
@@ -117,7 +146,7 @@ public class FileDAO {
 
         String sql = "insert into file (adi,type,path) values (?,?,?)";
         try {
-            PreparedStatement st = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement st = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setString(1, a.getAdi());
             st.setString(2, a.getType());
             st.setString(3, a.getPath());

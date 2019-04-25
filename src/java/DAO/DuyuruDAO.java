@@ -109,7 +109,18 @@ public class DuyuruDAO {
             System.out.println(ex.getMessage());
         }
     }
-
+    public void delete(Duyuru a) {
+        Connection con = ConnectionManager.getConnection();
+        String sql = "delete from duyuru where id=?";
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, a.getId());
+            st.executeUpdate();
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
     public void update(Duyuru a) {
         Connection con = ConnectionManager.getConnection();
 

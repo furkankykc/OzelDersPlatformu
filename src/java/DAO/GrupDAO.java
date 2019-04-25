@@ -127,6 +127,21 @@ public class GrupDAO {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        
+    }
+     public int count() {
+        int count = 0;
+        Connection con = ConnectionManager.getConnection();
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select count(id) as a_count from grup");
+            rs.next();
+            count = rs.getInt("a_count");
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return count;
     }
     public void update(Grup a) {
         Connection con = ConnectionManager.getConnection();

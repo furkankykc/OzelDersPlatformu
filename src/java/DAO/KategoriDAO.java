@@ -111,6 +111,19 @@ public class KategoriDAO {
         }
     }
 
+    public void delete(Kategori a) {
+        Connection con = ConnectionManager.getConnection();
+        String sql = "delete from kategori where id=?";
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, a.getId());
+            st.executeUpdate();
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
     public void update(Kategori a) {
         Connection con = ConnectionManager.getConnection();
 
@@ -131,7 +144,7 @@ public class KategoriDAO {
 
         String sql = "insert into kategori (adi) values (?)";
         try {
-            PreparedStatement st = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement st = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setString(1, a.getAdi());
             st.executeUpdate();
             try (ResultSet generatedKeys = st.getGeneratedKeys()) {

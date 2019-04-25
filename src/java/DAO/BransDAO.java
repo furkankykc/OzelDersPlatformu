@@ -1,5 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+ * To change this license header, choose License Heabrans in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -31,10 +31,11 @@ public class BransDAO {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if(rs.next())
+            if (rs.next()) {
                 this.brans = new Brans(rs.getInt("id"), rs.getString("adi"));
-            else
+            } else {
                 this.brans = null;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -61,6 +62,27 @@ public class BransDAO {
         return this.bransList;
     }
 
+    public ArrayList<Brans> list(int page, int pageSize) {
+        this.bransList = new ArrayList();
+        Connection con = ConnectionManager.getConnection();
+        int start = (page - 1) * pageSize;
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select * from brans order by id asc limit " + start + "," + pageSize);
+            while (rs.next()) {
+                this.bransList.add(new Brans(
+                        rs.getInt("id"), rs.getString("adi")
+                ));
+                System.out.println("-----------------");
+
+            }
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return this.bransList;
+    }
+
     public void delete(int id) {
         Connection con = ConnectionManager.getConnection();
         String sql = "delete from brans where id=?";
@@ -72,6 +94,34 @@ public class BransDAO {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    public void delete(Brans a) {
+        Connection con = ConnectionManager.getConnection();
+        String sql = "delete from brans where id=?";
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, a.getId());
+            st.executeUpdate();
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public int count() {
+        int count = 0;
+        Connection con = ConnectionManager.getConnection();
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select count(id) as a_count from brans");
+            rs.next();
+            count = rs.getInt("a_count");
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return count;
     }
 
     public void update(Brans a) {
@@ -94,10 +144,10 @@ public class BransDAO {
 
         String sql = "insert into brans (adi) values (?)";
         try {
-            PreparedStatement st = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement st = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setString(1, a.getAdi());
             st.executeUpdate();
-            
+
             try (ResultSet generatedKeys = st.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
 

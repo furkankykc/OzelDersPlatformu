@@ -112,6 +112,18 @@ public class YorumDAO {
             System.out.println(ex.getMessage());
         }
     }
+        public void delete(Yorum a) {
+        Connection con = ConnectionManager.getConnection();
+        String sql = "delete from yorum where id=?";
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, a.getId());
+            st.executeUpdate();
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 
     public void update(Yorum a) {
         Connection con = ConnectionManager.getConnection();

@@ -107,6 +107,18 @@ public class GunDAO {
             System.out.println(ex.getMessage());
         }
     }
+       public void delete(Gun a) {
+        Connection con = ConnectionManager.getConnection();
+        String sql = "delete from gun where id=?";
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, a.getId());
+            st.executeUpdate();
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 
     public void update(Gun a) {
         Connection con = ConnectionManager.getConnection();

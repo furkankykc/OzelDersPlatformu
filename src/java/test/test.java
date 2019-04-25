@@ -493,10 +493,15 @@ public class test {
 
         Grup grup_admin = grupDao.get(grupDao.create(new Grup("admin", yetki_admin)));
         Grup grup_user = grupDao.get(grupDao.create(new Grup("user", yetki_user)));
-        User admin = new User("root", "1234");
+        User admin = new User("root@mail.com", "1234");
         admin.getGrup().add(grup_admin);
-        User user = new User("user", "1234");
+        User user = new User("user@mail.com", "1234");
         user.getGrup().add(grup_user);
+        userDao.delete(userDao.get("root"));
+        userDao.delete(userDao.get("user"));
+        userDao.delete(userDao.get("root@mail.com"));
+        userDao.delete(userDao.get("user@mail.com"));
+
         userDao.create(admin);
         userDao.create(user);
 
@@ -545,6 +550,9 @@ public class test {
         }
         System.out.println(str);
         initializeDB();
+        User u = new UserDAO().get("root");
+        u.setEmail("root@mail.com");
+        new UserDAO().update(u);
     }
 
 }

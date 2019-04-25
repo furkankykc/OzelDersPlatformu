@@ -31,10 +31,11 @@ public class DersDAO {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if(rs.next())
+            if (rs.next()) {
                 this.ders = new Ders(rs.getInt("id"), rs.getString("adi"), rs.getInt("ucret"));
-            else
+            } else {
                 this.ders = null;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -110,6 +111,19 @@ public class DersDAO {
         }
     }
 
+    public void delete(Ders a) {
+        Connection con = ConnectionManager.getConnection();
+        String sql = "delete from ders where id=?";
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, a.getId());
+            st.executeUpdate();
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
     public void update(Ders a) {
         Connection con = ConnectionManager.getConnection();
 
@@ -131,7 +145,7 @@ public class DersDAO {
 
         String sql = "insert into ders (adi,ucret) values (?,?)";
         try {
-            PreparedStatement st = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement st = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setString(1, a.getAdi());
             st.setInt(2, a.getUcret());
             st.executeUpdate();

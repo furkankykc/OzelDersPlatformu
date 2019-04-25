@@ -25,13 +25,16 @@ public class DuyuruController implements Serializable {
     private DuyuruDAO duyuruDao;
     private Duyuru duyuru;
 
+    private int page = 1;
+    private int pageSize = 10;
+    private int pageCount;
     public DuyuruController() {
         this.duyuruList = new ArrayList<Duyuru>();
         this.duyuruDao = new DuyuruDAO();
     }
 
     public List<Duyuru> getaList() {
-        this.duyuruList = getaDao().list();
+        this.duyuruList = getaDao().list(page,pageSize);
         return duyuruList;
     }
 
@@ -90,4 +93,45 @@ public class DuyuruController implements Serializable {
 
     }
 
+    public void next() {
+        if (page < pageCount) {
+            this.page++;
+        }
+    }
+
+    public void previous() {
+        if (page > 1) {
+            this.page--;
+        }
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getPageCount() {
+        try {
+            this.pageCount = (int) Math.ceil(this.getaDao().count() / (double) this.pageSize);
+        } catch (Exception e) {
+            return 1;
+        }
+
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
 }

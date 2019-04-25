@@ -53,7 +53,7 @@ public class UserDAO {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             rs.next();
-            this.user = new User(rs.getInt("id"),rs.getInt("bakiye"), rs.getString("telefon"), rs.getString("isim"), rs.getString("sehir"), rs.getString("email"), rs.getString("egitim_duzeyi"), rs.getString("okul_durumu"), rs.getDate("uyelik_tarihi"), rs.getString("meslek"), rs.getString("diger"), rs.getString("password"), gDao.geUserGrup(rs.getInt("id")));
+            this.user = new User(rs.getInt("id"), rs.getInt("bakiye"), rs.getString("telefon"), rs.getString("isim"), rs.getString("sehir"), rs.getString("email"), rs.getString("egitim_duzeyi"), rs.getString("okul_durumu"), rs.getDate("uyelik_tarihi"), rs.getString("meslek"), rs.getString("diger"), rs.getString("password"), gDao.geUserGrup(rs.getInt("id")));
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -80,6 +80,42 @@ public class UserDAO {
         return this.userList;
     }
 
+    public ArrayList<User> list(int page, int pageSize) {
+        this.userList = new ArrayList();
+        Connection con = ConnectionManager.getConnection();
+        int start = (page - 1) * pageSize;
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select * from user order by id asc limit " + start + "," + pageSize);
+            while (rs.next()) {
+                this.userList.add(new User(
+                        rs.getInt("id"), rs.getInt("bakiye"), rs.getString("telefon"), rs.getString("isim"), rs.getString("sehir"), rs.getString("email"), rs.getString("egitim_duzeyi"), rs.getString("okul_durumu"), rs.getDate("uyelik_tarihi"), rs.getString("meslek"), rs.getString("diger"), rs.getString("password"), gDao.geUserGrup(rs.getInt("id"))
+                ));
+                System.out.println("-----------------");
+
+            }
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return this.userList;
+    }
+
+    public int count() {
+        int count = 0;
+        Connection con = ConnectionManager.getConnection();
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select count(id) as a_count from user");
+            rs.next();
+            count = rs.getInt("a_count");
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return count;
+    }
+
     public void delete(int id) {
         Connection con = ConnectionManager.getConnection();
         String sql = "delete from user where id=?";
@@ -92,7 +128,7 @@ public class UserDAO {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public void delete(User a) {
         Connection con = ConnectionManager.getConnection();
         String sql = "delete from user where id=?";

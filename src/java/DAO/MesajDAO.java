@@ -115,6 +115,19 @@ public class MesajDAO {
         }
     }
 
+    public void delete(Mesaj a) {
+        Connection con = ConnectionManager.getConnection();
+        String sql = "delete from mesaj where id=?";
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, a.getId());
+            st.executeUpdate();
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
     public void update(Mesaj a) {
         Connection con = ConnectionManager.getConnection();
 
@@ -137,7 +150,7 @@ public class MesajDAO {
         Connection con = ConnectionManager.getConnection();
         String sql = "insert into mesaj (gonderici_id, alici_id, title, icerik) values (?,?,?,?)";
         try {
-            PreparedStatement st = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement st = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setInt(1, a.getGonderici().getId());
             st.setInt(2, a.getAlici().getId());
             st.setString(3, a.getTitle());
