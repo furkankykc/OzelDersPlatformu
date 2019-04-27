@@ -46,6 +46,9 @@ public class LoginFilter implements Filter {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            HttpServletResponse resp = (HttpServletResponse) response;
+             HttpServletRequest reqt = (HttpServletRequest) request;
+            resp.sendRedirect(reqt.getContextPath() + "/faces/login.xhtml");
         }
 
     }

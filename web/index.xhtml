@@ -9,38 +9,182 @@
         <title>ANA SAYFA</title>
         <!-- Image and text -->
 
-     
+
     </h:head>
     <h:body>
 
 
         <ui:composition template="/template/common-layout.xhtml">
             <ui:define name="content">
-              
-<!--                <div class="container">
+                <style>
+                    html {
+                        font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+                        font-size: 14px;
+                    }
+
+                    h5 {
+                        font-size: 1.28571429em;
+                        font-weight: 700;
+                        line-height: 1.2857em;
+                        margin: 0;
+                    }
+
+                    .card {
+                        font-size: 1em;
+                        overflow: hidden;
+                        padding: 0;
+                        border: none;
+                        border-radius: .28571429rem;
+                        box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+                    }
+
+                    .card-block {
+                        font-size: 1em;
+                        position: relative;
+                        margin: 0;
+                        padding: 1em;
+                        border: none;
+                        border-top: 1px solid rgba(34, 36, 38, .1);
+                        box-shadow: none;
+                    }
+
+                    .card-img-top {
+                        display: block;
+                        width: 100%;
+                        height: auto;
+                    }
+
+                    .card-title {
+                        font-size: 1.28571429em;
+                        font-weight: 700;
+                        line-height: 1.2857em;
+                    }
+
+                    .card-text {
+                        clear: both;
+                        margin-top: .5em;
+                        color: rgba(0, 0, 0, .68);
+                    }
+
+                    .card-footer {
+                        font-size: 1em;
+                        position: static;
+                        top: 0;
+                        left: 0;
+                        max-width: 100%;
+                        padding: .75em 1em;
+                        color: rgba(0, 0, 0, .4);
+                        border-top: 1px solid rgba(0, 0, 0, .05) !important;
+                        background: #fff;
+                    }
+
+                    .card-inverse .btn {
+                        border: 1px solid rgba(0, 0, 0, .05);
+                    }
+
+                    .profile {
+                        position: absolute;
+                        top: -12px;
+                        display: inline-block;
+                        overflow: hidden;
+                        box-sizing: border-box;
+                        width: 25px;
+                        height: 25px;
+                        margin: 0;
+                        border: 1px solid #fff;
+                        border-radius: 50%;
+                    }
+
+                    .profile-avatar {
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 50%;
+                    }
+
+                    .profile-inline {
+                        position: relative;
+                        top: 0;
+                        display: inline-block;
+                    }
+
+                    .profile-inline ~ .card-title {
+                        display: inline-block;
+                        margin-left: 4px;
+                        vertical-align: top;
+                    }
+
+                    .text-bold {
+                        font-weight: 700;
+                    }
+
+                    .meta {
+                        font-size: 1em;
+                        color: rgba(0, 0, 0, .4);
+                    }
+
+                    .meta a {
+                        text-decoration: none;
+                        color: rgba(0, 0, 0, .4);
+                    }
+
+                    .meta a:hover {
+                        color: rgba(0, 0, 0, .87);
+                    }
+                </style>
+                <div class="container">
+
+                    <h1>DERSLER</h1>
                     <div class="row">
-                        <h:form id="yayin-table">
-                            <div class="col-md-12">
+                        <ui:repeat value="#{dersController.getaList()}" var="ders">
 
-                                <h:dataTable  value="{dersController.getaList}" var="aDers" styleClass="table table-stripped">
-                                    <h:column>
-                                        <f:facet name="header">ID</f:facet>
-                                            {aDers.id}
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">ADI</f:facet>
-                                        <h:commandLink action="{dersController.updateForm(aDers)}" value="{aDers.adi}" />
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">Ucret</f:facet>
-                                            {aDers.ucret}
-                                    </h:column>
-                                </h:dataTable>
-
+                            <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
+                                <div class="card">
+                                    <h:graphicImage class="card-img-top"  value="/file#{ders.image.path}"/>
+                                    <div class="card-block">
+                                        <h4 class="card-title">#{ders.adi}</h4>
+                                        <div class="meta">
+                                            <a href="#">#{ders.user.isim}</a>
+                                        </div>
+                                        <div class="card-text">
+                                            #{ders.brans.adi}
+                                            #{ders.brans.kategori.adi}
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <span class="float-right">Joined in #{ders.user.uyelikTarihi}</span>
+                                        <span><i class=""></i>Price #{ders.ucret}</span>
+                                    </div>
+                                </div>
                             </div>
-                        </h:form>
+                        </ui:repeat>
                     </div>
-                </div>-->
+                    <h1>HOCALAR</h1>
+                    <div class="row">
+                        <ui:repeat value="#{userController.getaList()}" var="user">
+
+                            <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
+                                <div class="card">
+                                    <h:graphicImage class="card-img-top"  value="/file#{user.image.path}"/>
+                                    <div class="card-block">
+                                        <h4 class="card-title">#{user.isim}</h4>
+                                        <div class="meta">
+                                            <a href="#">#{user.egitimDuzeyi}</a>
+                                        </div>
+                                        <div class="card-text">
+                                            #{user.diger}
+                                            #{user.meslek}
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <span class="float-right">Joined in #{user.uyelikTarihi}</span>
+                                        <span><i class=""></i>Sehir: #{user.sehir}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                </div>
             </ui:define>
         </ui:composition>
     </h:body>

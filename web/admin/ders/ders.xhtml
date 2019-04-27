@@ -43,6 +43,21 @@
                                         </h:commandLink>
 
                                     </h:column>
+                                    
+                                    <h:column>
+                                        <f:facet name="header">Brans</f:facet>
+                                            #{aDers.brans.adi}
+                                    </h:column>
+                                    
+                                    <h:column>
+                                        <f:facet name="header">Image</f:facet>
+                                            #{aDers.image.adi}
+                                    </h:column>
+                                    
+                                    <h:column>
+                                        <f:facet name="header">User</f:facet>
+                                            #{aDers.user.isim}
+                                    </h:column>
                                     <h:column>
                                         <f:facet name="header">Ücret</f:facet>
                                             #{aDers.ucret}
@@ -68,6 +83,18 @@
                                     <h:inputText styleClass="form-control" value="#{dersController.ders.adi}"/> <br/>
                                     <label for="inputName">Ders Ücreti</label>
                                     <h:inputText styleClass="form-control" value="#{dersController.ders.ucret}"/> <br/>
+                                     <label for="inputName">Brans </label>
+                                     <h:selectOneMenu styleClass="custom-select" value="#{dersController.ders.brans}" converter="bransConverter">
+                                         <f:selectItems value="#{bransController.getaList()}" var="brans" itemValue="#{brans}" itemLabel="#{brans.adi}"/>
+                                    </h:selectOneMenu>
+                                      <label for="inputName">User </label>
+                                      <h:selectOneMenu styleClass="custom-select" value="#{dersController.ders.user}" converter="userConverter">
+                                          <f:selectItems value="#{userController.getaList()}" var="user" itemValue="#{user}" itemLabel="#{user.isim}"/>
+                                    </h:selectOneMenu>
+                                       <label for="inputName">Image </label>
+                                    <h:selectOneMenu styleClass="custom-select" value="#{dersController.ders.image}" converter="fileConverter">
+                                        <f:selectItems value="#{fileController.getaList()}" var="file" itemValue="#{file}" itemLabel="#{file.adi}"/>
+                                    </h:selectOneMenu>
                                 </div>
                                 <div class="form-group">
                                     <h:commandButton styleClass="btn btn-primary"  disabled="#{!userController.yetki.update}"  rendered="#{dersController.ders.id!=0}" value="Update" action="#{dersController.update}">

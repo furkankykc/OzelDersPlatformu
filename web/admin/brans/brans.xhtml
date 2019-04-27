@@ -19,17 +19,15 @@
                     <div class="row">
                         <div class="col-md-6">
                             <h:form id="ajax-table">
-                                <div class="container">
-                                    <div class="form-check-inline">
+                                <div class="btn-group-vertical">
 
-                                        <h:commandButton action="#{bransController.previous}" value="Previous" styleClass="btn btn-outline-dark">
-                                            <f:ajax execute="@this" render="template-form"/>
-                                        </h:commandButton>
-                                        <h:outputLabel  value="#{bransController.page} of #{bransController.pageCount}" styleClass="text textArea"/>
-                                        <h:commandButton action="#{bransController.next}" value="Next" styleClass="btn btn-outline-dark">
-                                            <f:ajax execute="@this" render="template-form"/>
-                                        </h:commandButton>
-                                    </div>
+                                    <h:commandButton action="#{bransController.previous}" value="Previous" styleClass="btn btn-outline-dark">
+                                        <f:ajax execute="@this" render="template-form"/>
+                                    </h:commandButton>
+                                    <h:outputLabel  value="#{bransController.page} of #{bransController.pageCount}" styleClass="text textArea"/>
+                                    <h:commandButton action="#{bransController.next}" value="Next" styleClass="btn btn-outline-dark">
+                                        <f:ajax execute="@this" render="template-form"/>
+                                    </h:commandButton>
                                 </div>
                                 <h:dataTable  rendered="#{userController.yetki.read}" value="#{bransController.getaList()}" var="aBrans" styleClass="table table-stripped">
                                     <h:column>
@@ -43,7 +41,10 @@
                                         </h:commandLink>
 
                                     </h:column>
-
+                                    <h:column>
+                                        <f:facet name="header">Kategori</f:facet>
+                                            #{aBrans.kategori.adi}
+                                    </h:column>
 
                                     <h:column>
                                         <f:facet name="header">DELETE</f:facet>
@@ -66,6 +67,10 @@
                                     <label for="inputName">Brans Adi</label>
                                     <h:inputText styleClass="form-control" value="#{bransController.brans.adi}"/> <br/>
                                 </div>
+                                       <label for="inputName">Kategori</label>
+                                       <h:selectOneMenu styleClass="custom-select" value="#{bransController.brans.kategori}" converter="kategoriConverter">
+                                           <f:selectItems value="#{kategoriController.getaList()}" var="kategori" itemValue="#{kategori}" itemLabel="#{kategori.adi}"/>
+                                    </h:selectOneMenu>
                                 <div class="form-group">
                                     <h:commandButton styleClass="btn btn-primary" disabled="#{!userController.yetki.update}" rendered="#{bransController.brans.id!=0}" value="Update" action="#{bransController.update}">
                                         <f:ajax execute="ajax-form" render="template-form"/>

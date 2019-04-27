@@ -12,17 +12,21 @@ package Entity;
 public class Brans {
     private int id;
     private String adi;
+    private Kategori kategori;
 
     public Brans() {
     }
 
-    public Brans(int brans_id, String adi) {
+    public Brans(int brans_id, String adi,Kategori kategori) {
         this.id = brans_id;
         this.adi = adi;
+        this.kategori = kategori;
     }
 
-    public Brans(String adi) {
+    public Brans(String adi,Kategori kategori) {
         this.adi = adi;
+        this.kategori = kategori;
+        
     }
 
     public int getId() {
@@ -41,10 +45,20 @@ public class Brans {
         this.adi = adi;
     }
 
+    public Kategori getKategori() {
+        return kategori;
+    }
+
+    public void setKategori(Kategori kategori) {
+        this.kategori = kategori;
+    }
+
     @Override
     public String toString() {
-        return "Brans{" + "brans_id=" + id + ", adi=" + adi + '}';
+        return "Brans{" + "id=" + id + ", adi=" + adi + ", kategori=" + kategori + '}';
     }
+
+   
 
     @Override
     public int hashCode() {

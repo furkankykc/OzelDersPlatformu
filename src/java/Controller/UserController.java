@@ -130,6 +130,7 @@ public class UserController implements Serializable {
         }
         for (Grup grup : Utility.SessionUtils.getUser().getGrup()) {
             Yetki yetkiler = grup.getYetki();
+            System.out.println(yetkiler);
             if (yetkiler.isCreate()) {
                 yetki.setCreate(true);
             }
@@ -137,13 +138,14 @@ public class UserController implements Serializable {
                 yetki.setRead(true);
             }
             if (yetkiler.isUpdate()) {
-                yetki.setRead(true);
+                yetki.setUpdate(true);
             }
             if (yetkiler.isDelete()) {
                 yetki.setDelete(true);
             }
 
         }
+//        System.out.println(yetki);
         return yetki;
     }
 
@@ -156,7 +158,8 @@ public class UserController implements Serializable {
     }
 
     public String login() {
-//        test.test.initializeDB();
+        if(getaDao().list().isEmpty())
+            test.test.initializeDB();
         User user = this.getaDao().get(this.user.getEmail());
         message = "";
         if (user != null) {
@@ -164,6 +167,7 @@ public class UserController implements Serializable {
                 Utility.SessionUtils.setUser(user);
                 return "/index.xhtml";
                 //giris yaptınız
+  
             } else {
 
                 message = "Şifrelen yanlış";

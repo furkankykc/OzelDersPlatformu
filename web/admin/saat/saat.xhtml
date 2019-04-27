@@ -61,7 +61,11 @@
                                 <div class="form-group">
                                     <h:inputHidden value="#{saatController.saat.id}"/>
                                     <label for="inputName">Saat Adi</label>
-                                    <h:inputText styleClass="form-control" value="#{saatController.saat.saat}"/> <br/>
+                                    <h:inputText styleClass="form-control" value="#{saatController.saat.saat}"> 
+                                        <f:validator validatorId="saatValidator"  />
+                                    </h:inputText>
+                                    
+                                        <br/>
                                 </div>
                                 <div class="form-group">
                                     <h:commandButton styleClass="btn btn-primary" disabled="#{!userController.yetki.update}" rendered="#{saatController.saat.id!=0}" value="Update" action="#{saatController.update}">

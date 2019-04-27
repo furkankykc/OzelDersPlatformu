@@ -66,22 +66,15 @@
 
 
                         <div class="col-md-6" >
-                            <h:form id="ajax-form">
-                                <div class="form-group">
-                                    <h:inputHidden value="#{fileController.file.id}"/>
-                                    <label for="inputName">File Adi</label>
-                                    <h:inputText styleClass="form-control" value="#{fileController.file.adi}"/> <br/>
-                                    <label for="inputName">File Type</label>
-                                    <h:inputText styleClass="form-control" value="#{fileController.file.type}"/> <br/>
-                                    <label for="inputName">File Path</label>
-                                    <h:inputText styleClass="form-control" value="#{fileController.file.path}"/> <br/>
-                                </div>
+                            <h:form enctype="multipart/form-data" id="ajax-form">
+                                <h:outputText value="Dosya Seçin "/>
+                                <h:inputFile  value="#{fileController.part}"/>
                                 <div class="form-group">
                                     <h:commandButton styleClass="btn btn-primary"  disabled="#{!userController.yetki.update}"  rendered="#{fileController.file.id!=0}" value="Update" action="#{fileController.update}">
                                         <f:ajax execute="ajax-form" render="template-form"/>
                                     </h:commandButton>
 
-                                    <h:commandButton styleClass="btn btn-primary"  disabled="#{!userController.yetki.create}" rendered="#{fileController.file.id==0}" value="Create" action="#{fileController.create}">  
+                                    <h:commandButton styleClass="btn btn-primary"  disabled="#{!userController.yetki.create}" rendered="#{fileController.file.id==0}" value="Create" action="#{fileController.upload}">  
                                         <f:ajax execute="ajax-form" render="template-form"/>
                                     </h:commandButton>
 

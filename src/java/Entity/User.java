@@ -28,8 +28,11 @@ public class User {
     private String diger;
     private String password;
     private List<Grup> grup;
+    private File image;
 
     public User() {
+        
+        image = new File();
         grup = new ArrayList<>();
     }
 
@@ -38,9 +41,11 @@ public class User {
         this.email = isim;
         this.password = password;
         this.grup = new ArrayList<>();
+        this.image = new File();
+
     }
 
-    public User(int bakiye, String telefon, String isim, String sehir, String email, String egitimDuzeyi, String okulDurumu, Date uyelikTarihi, String meslek, String diger, String password, List<Grup> grup) {
+    public User(int bakiye, String telefon, String isim, String sehir, String email, String egitimDuzeyi, String okulDurumu, Date uyelikTarihi, String meslek, String diger, String password, List<Grup> grup, File image) {
         this.bakiye = bakiye;
         this.telefon = telefon;
         this.isim = isim;
@@ -52,6 +57,11 @@ public class User {
         this.meslek = meslek;
         this.diger = diger;
         this.password = password;
+        if (image != null) {
+            this.image = image;
+        } else {
+            this.image = new File();
+        }
         if (grup != null) {
             this.grup = grup;
         } else {
@@ -59,7 +69,7 @@ public class User {
         }
     }
 
-    public User(int id, int bakiye, String telefon, String isim, String sehir, String email, String egitimDuzeyi, String okulDurumu, Date uyelikTarihi, String meslek, String diger, String password, List<Grup> grup) {
+    public User(int id, int bakiye, String telefon, String isim, String sehir, String email, String egitimDuzeyi, String okulDurumu, Date uyelikTarihi, String meslek, String diger, String password, List<Grup> grup, File image) {
         this.id = id;
         this.bakiye = bakiye;
         this.telefon = telefon;
@@ -72,6 +82,12 @@ public class User {
         this.meslek = meslek;
         this.diger = diger;
         this.password = password;
+
+        if (image != null) {
+            this.image = image;
+        } else {
+            this.image = new File();
+        }
         if (grup != null) {
             this.grup = grup;
         } else {
@@ -183,9 +199,17 @@ public class User {
         this.grup = grup;
     }
 
+    public File getImage() {
+        return image;
+    }
+
+    public void setImage(File image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", bakiye=" + bakiye + ", telefon=" + telefon + ", isim=" + isim + ", sehir=" + sehir + ", email=" + email + ", egitimDuzeyi=" + egitimDuzeyi + ", okulDurumu=" + okulDurumu + ", uyelikTarihi=" + uyelikTarihi + ", meslek=" + meslek + ", diger=" + diger + ", password=" + password + '}';
+        return "User{" + "id=" + id + ", bakiye=" + bakiye + ", telefon=" + telefon + ", isim=" + isim + ", sehir=" + sehir + ", email=" + email + ", egitimDuzeyi=" + egitimDuzeyi + ", okulDurumu=" + okulDurumu + ", uyelikTarihi=" + uyelikTarihi + ", meslek=" + meslek + ", diger=" + diger + ", password=" + password + ", grup=" + grup + ", image=" + image + '}';
     }
 
     @Override

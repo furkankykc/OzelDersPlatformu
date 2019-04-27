@@ -34,7 +34,7 @@ public class DersController implements Serializable {
     }
 
     public List<Ders> getaList() {
-        this.dersList = getaDao().list(page,pageSize);
+        this.dersList = getaDao().list();
         return dersList;
     }
 

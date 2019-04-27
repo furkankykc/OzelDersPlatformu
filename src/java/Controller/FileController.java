@@ -7,11 +7,18 @@ package Controller;
 
 import DAO.FileDAO;
 import Entity.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -24,17 +31,60 @@ public class FileController implements Serializable {
     private List<File> fileList;
     private FileDAO fileDao;
     private File file;
+    private Part part;
 
     private int page = 1;
     private int pageSize = 10;
     private int pageCount;
+
+    public Part getPart() {
+        return part;
+    }
+
+    public void setPart(Part part) {
+        this.part = part;
+    }
+
+    public String getFileName(Part part) {
+        for (String cd : part.getHeader("content-disposition").split(";")) {
+            if (cd.trim().startsWith("filename")) {
+                String filename = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+                return filename;
+            }
+        }
+        return "";
+
+    }
+
+    public void upload() {
+        try (InputStream input = part.getInputStream()) {
+            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext(); 
+            String yol = "/resources/images/";
+            String webContentRoot = ec.getRealPath(yol);
+            Path a = new java.io.File(webContentRoot, part.getSubmittedFileName()).toPath();
+            try {
+                Files.copy(input, a);
+            } catch (Exception ex) {
+            }
+            
+            
+           
+
+            this.file = new File(part.getSubmittedFileName(), a.toAbsolutePath().toString(), part.getContentType());
+            System.out.println(file);
+            this.getaDao().create(this.file);
+        } catch (Exception ex) {
+            System.err.print(ex);
+        }
+    }
+
     public FileController() {
         this.fileList = new ArrayList<File>();
         this.fileDao = new FileDAO();
     }
 
     public List<File> getaList() {
-        this.fileList = getaDao().list(page,pageSize);
+        this.fileList = getaDao().list(page, pageSize);
         return fileList;
     }
 
@@ -83,8 +133,8 @@ public class FileController implements Serializable {
         this.file = file;
         return "confirm_delete";
 
-
     }
+
     public String delete() {
         this.file = file;
         this.getaDao().delete(file.getId());

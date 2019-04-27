@@ -22,6 +22,7 @@ public class BransDAO {
 
     private Brans brans;
     private ArrayList bransList;
+    private KategoriDAO kategoriDao = new KategoriDAO();
 
     public Brans get(int id) {
         Connection con = ConnectionManager.getConnection();
@@ -32,7 +33,7 @@ public class BransDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                this.brans = new Brans(rs.getInt("id"), rs.getString("adi"));
+                this.brans = new Brans(rs.getInt("id"), rs.getString("adi"),kategoriDao.get(rs.getInt("kategori_id")));
             } else {
                 this.brans = null;
             }
@@ -50,7 +51,7 @@ public class BransDAO {
             ResultSet rs = st.executeQuery("select * from brans");
             while (rs.next()) {
                 this.bransList.add(new Brans(
-                        rs.getInt("id"), rs.getString("adi")
+                        rs.getInt("id"), rs.getString("adi"),kategoriDao.get(rs.getInt("kategori_id"))
                 ));
                 System.out.println("-----------------");
             }
@@ -71,7 +72,7 @@ public class BransDAO {
             ResultSet rs = st.executeQuery("select * from brans order by id asc limit " + start + "," + pageSize);
             while (rs.next()) {
                 this.bransList.add(new Brans(
-                        rs.getInt("id"), rs.getString("adi")
+                        rs.getInt("id"), rs.getString("adi"),kategoriDao.get(rs.getInt("kategori_id"))
                 ));
                 System.out.println("-----------------");
 
@@ -127,11 +128,13 @@ public class BransDAO {
     public void update(Brans a) {
         Connection con = ConnectionManager.getConnection();
 
-        String sql = "update brans set adi=? where id=?";
+        String sql = "update brans set adi=?,kategori_id=? where id=?";
         try {
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, a.getAdi());
-            st.setInt(2, a.getId());
+            st.setInt(2, a.getKategori().getId());
+            st.setInt(3, a.getId());
+            
             st.executeUpdate();
             con.close();
         } catch (SQLException ex) {
@@ -142,10 +145,11 @@ public class BransDAO {
     public int create(Brans a) {
         Connection con = ConnectionManager.getConnection();
 
-        String sql = "insert into brans (adi) values (?)";
+        String sql = "insert into brans (adi,kategori_id) values (?,?)";
         try {
             PreparedStatement st = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setString(1, a.getAdi());
+            st.setInt(2, a.getKategori().getId());
             st.executeUpdate();
 
             try (ResultSet generatedKeys = st.getGeneratedKeys()) {

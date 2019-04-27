@@ -22,6 +22,10 @@ public class DersDAO {
 
     private Ders ders;
     private ArrayList dersList;
+    private UserDAO userDao = new UserDAO();
+    private FileDAO fileDao = new FileDAO();
+    private BransDAO bransDao = new BransDAO();
+    
 
     public Ders get(int id) {
         Connection con = ConnectionManager.getConnection();
@@ -32,7 +36,7 @@ public class DersDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                this.ders = new Ders(rs.getInt("id"), rs.getString("adi"), rs.getInt("ucret"));
+                this.ders = new Ders(rs.getInt("id"), rs.getString("adi"), rs.getInt("ucret"),bransDao.get(rs.getInt("brans_id")),fileDao.get(rs.getInt("image_id")),userDao.get(rs.getInt("user_id")));
             } else {
                 this.ders = null;
             }
@@ -50,12 +54,11 @@ public class DersDAO {
             ResultSet rs = st.executeQuery("select * from ders");
             while (rs.next()) {
                 this.dersList.add(new Ders(
-                        rs.getInt("id"), rs.getString("adi"), rs.getInt("ucret")
+                        rs.getInt("id"), rs.getString("adi"), rs.getInt("ucret"),bransDao.get(rs.getInt("brans_id")),fileDao.get(rs.getInt("image_id")),userDao.get(rs.getInt("user_id"))
                 ));
                 System.out.println("-----------------");
 
             }
-            con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -70,7 +73,6 @@ public class DersDAO {
             ResultSet rs = st.executeQuery("select count(id) as a_count from ders");
             rs.next();
             count = rs.getInt("a_count");
-            con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -86,12 +88,11 @@ public class DersDAO {
             ResultSet rs = st.executeQuery("select * from ders order by id asc limit " + start + "," + pageSize);
             while (rs.next()) {
                 this.dersList.add(new Ders(
-                        rs.getInt("id"), rs.getString("adi"), rs.getInt("ucret")
+                        rs.getInt("id"), rs.getString("adi"), rs.getInt("ucret"),bransDao.get(rs.getInt("brans_id")),fileDao.get(rs.getInt("image_id")),userDao.get(rs.getInt("user_id"))
                 ));
                 System.out.println("-----------------");
 
             }
-            con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -105,7 +106,6 @@ public class DersDAO {
             PreparedStatement st = con.prepareStatement(sql);
             st.setInt(1, id);
             st.executeUpdate();
-            con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -118,7 +118,6 @@ public class DersDAO {
             PreparedStatement st = con.prepareStatement(sql);
             st.setInt(1, a.getId());
             st.executeUpdate();
-            con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -127,14 +126,16 @@ public class DersDAO {
     public void update(Ders a) {
         Connection con = ConnectionManager.getConnection();
 
-        String sql = "update ders set adi=?,ucret=? where id=?";
+        String sql = "update ders set adi=?,ucret=?,brans_id=?,image_id=?,user_id=? where id=?";
         try {
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, a.getAdi());
             st.setInt(2, a.getUcret());
-            st.setInt(3, a.getId());
+            st.setInt(3, a.getBrans().getId());
+            st.setInt(4, a.getImage().getId());
+            st.setInt(5, a.getUser().getId());
+            st.setInt(6, a.getId());
             st.executeUpdate();
-            con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -143,11 +144,14 @@ public class DersDAO {
     public int create(Ders a) {
         Connection con = ConnectionManager.getConnection();
 
-        String sql = "insert into ders (adi,ucret) values (?,?)";
+        String sql = "insert into ders (adi,ucret,brans_id,image_id,user_id) values (?,?,?,?,?)";
         try {
             PreparedStatement st = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setString(1, a.getAdi());
             st.setInt(2, a.getUcret());
+            st.setInt(3, a.getBrans().getId());
+            st.setInt(4, a.getImage().getId());
+            st.setInt(5, a.getUser().getId());
             st.executeUpdate();
             try (ResultSet generatedKeys = st.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -156,7 +160,6 @@ public class DersDAO {
                 }
 
             }
-            con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

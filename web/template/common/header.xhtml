@@ -9,25 +9,25 @@
 
         <ui:composition>
             <nav class="navbar navbar-light bg-faded">
-                <a class="navbar-brand" href="#/ozelDers/faces/index.xhtml">
+                <a class="navbar-brand" immediate="true" href="/ozelDers/faces/index.xhtml">
                     Özel Ders Platformu
                 </a>
                 
                 <c:if test="#{!userController.isLoggedin()}">
-                    <a class="navbar-right" href="/ozelDers/faces/login.xhtml" >
+                    <a class="navbar-right" immediate="true" href="/ozelDers/faces/login.xhtml" >
                         Login
                     </a>                
                 </c:if>
                 <c:if test="#{userController.type}">
                     <a class="navbar-right">
-                        <h:commandLink action="#{userController.panel()}" value="Panel"/>
+                        <h:commandLink immediate="true" action="#{userController.panel()}" value="Panel"/>
 
                     </a>
                 </c:if>
                 <c:if test="#{userController.isLoggedin()}">
                     <a class="navbar-right">
                     #{session.getAttribute("userid")}
-                        <h:commandLink action="#{userController.logout()}" value="Logout"/>
+                        <h:commandLink immediate="true" action="#{userController.logout()}" value="Logout"/>
 
                     </a>
                 </c:if>

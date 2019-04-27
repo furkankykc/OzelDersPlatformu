@@ -13,33 +13,33 @@
                 <a class="navbar-brand" href="/ozelDers/faces/index.xhtml">
                     Özel Ders Platformu
                 </a>
-                <a  class="navbar-brand" href="/ozelDers/faces/admin/brans/brans.xhtml">Branş</a>
-                <a  class="navbar-brand" href="/ozelDers/faces/admin/mesaj/mesaj.xhtml">Mesaj</a>
-                <a  class="navbar-brand" href="/ozelDers/faces/admin/ders/ders.xhtml">Ders</a>
-                <a  class="navbar-brand" href="/ozelDers/faces/admin/duyuru/duyuru.xhtml">Duyuru</a>
-                <a  class="navbar-brand" href="/ozelDers/faces/admin/file/file.xhtml">File</a>
-                <a  class="navbar-brand" href="/ozelDers/faces/admin/grup/grup.xhtml">Grup</a>
-                <a  class="navbar-brand" href="/ozelDers/faces/admin/gun/gun.xhtml">Gün</a>
-                <a  class="navbar-brand" href="/ozelDers/faces/admin/kategori/kategori.xhtml">Kategori</a>
-                <a  class="navbar-brand" href="/ozelDers/faces/admin/saat/saat.xhtml">Saat</a>
-                <a  class="navbar-brand" href="/ozelDers/faces/admin/user/user.xhtml">User</a>
-                <a  class="navbar-brand" href="/ozelDers/faces/admin/yetki/yetki.xhtml">Yetki</a>
+                <a  class="navbar-brand" immediate="true" href="/ozelDers/faces/admin/brans/brans.xhtml">Branş</a>
+                <a  class="navbar-brand" immediate="true" href="/ozelDers/faces/admin/mesaj/mesaj.xhtml">Mesaj</a>
+                <a  class="navbar-brand" immediate="true" href="/ozelDers/faces/admin/ders/ders.xhtml">Ders</a>
+                <a  class="navbar-brand" immediate="true" href="/ozelDers/faces/admin/duyuru/duyuru.xhtml">Duyuru</a>
+                <a  class="navbar-brand" immediate="true" href="/ozelDers/faces/admin/file/file.xhtml">File</a>
+                <a  class="navbar-brand" immediate="true" href="/ozelDers/faces/admin/grup/grup.xhtml">Grup</a>
+                <a  class="navbar-brand" immediate="true" href="/ozelDers/faces/admin/gun/gun.xhtml">Gün</a>
+                <a  class="navbar-brand" immediate="true" href="/ozelDers/faces/admin/kategori/kategori.xhtml">Kategori</a>
+                <a  class="navbar-brand" immediate="true" href="/ozelDers/faces/admin/saat/saat.xhtml">Saat</a>
+                <a  class="navbar-brand" immediate="true" href="/ozelDers/faces/admin/user/user.xhtml">User</a>
+                <a  class="navbar-brand" immediate="true" href="/ozelDers/faces/admin/yetki/yetki.xhtml">Yetki</a>
 
                 <c:if test="#{!userController.isLoggedin()}">
-                    <a class="navbar-right" href="/ozelDers/faces/admin/login.xhtml" >
+                    <a class="navbar-right" immediate="true" href="/ozelDers/faces/admin/login.xhtml" >
                         Login
                     </a>                
                 </c:if>
                 <c:if test="#{userController.type}">
                     <a class="navbar-right">
-                        <h:commandLink action="#{userController.site()}" value="Site"/>
+                        <h:commandLink immediate="true" action="#{userController.site()}" value="Site"/>
 
                     </a>
                 </c:if>
                 <c:if test="#{userController.isLoggedin()}">
                     <a class="navbar-right">
                     #{session.getAttribute("userid")}
-                        <h:commandLink action="#{userController.logout()}" value="Logout"/>
+                        <h:commandLink immediate="true" action="#{userController.logout()}" value="Logout"/>
 
                     </a>
                 </c:if>

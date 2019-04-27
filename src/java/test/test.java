@@ -17,7 +17,9 @@ public class test {
 
     public static boolean test_BransDAO() {
         BransDAO bransDao = new BransDAO();
-        Brans brans = new Brans("test_name");
+        KategoriDAO kategoriDao = new KategoriDAO();
+        Kategori test_kategori = kategoriDao.get(kategoriDao.create(new Kategori("test_kategori")));
+        Brans brans = new Brans("test_name", test_kategori);
         int generated_id = bransDao.create(brans);
         brans.setId(generated_id);
         System.out.println(brans);
@@ -60,7 +62,16 @@ public class test {
 
     public static boolean test_DersDAO() {
         DersDAO dersDao = new DersDAO();
-        Ders ders = new Ders("test_name", 12);
+        BransDAO bransDao = new BransDAO();
+        UserDAO userDao = new UserDAO();
+        FileDAO fileDao = new FileDAO();
+        KategoriDAO kategoriDao = new KategoriDAO();
+        User test_user = userDao.get(userDao.create(new User("bilal", "1234")));
+        File test_file = fileDao.get(fileDao.create(new File("test", "", "img")));
+        Kategori test_kategori = kategoriDao.get(kategoriDao.create(new Kategori("test_kategori")));
+        Brans test_brans = bransDao.get(bransDao.create(new Brans("test_brans", test_kategori)));
+
+        Ders ders = new Ders("test_name", 12, test_brans, test_file, test_user);
         int generated_id = dersDao.create(ders);
         ders.setId(generated_id);
         System.out.println(ders);
@@ -497,11 +508,6 @@ public class test {
         admin.getGrup().add(grup_admin);
         User user = new User("user@mail.com", "1234");
         user.getGrup().add(grup_user);
-        userDao.delete(userDao.get("root"));
-        userDao.delete(userDao.get("user"));
-        userDao.delete(userDao.get("root@mail.com"));
-        userDao.delete(userDao.get("user@mail.com"));
-
         userDao.create(admin);
         userDao.create(user);
 
