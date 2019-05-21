@@ -22,8 +22,16 @@ public class BransDAO {
 
     private Brans brans;
     private ArrayList bransList;
-    private KategoriDAO kategoriDao = new KategoriDAO();
+    private KategoriDAO kategoriDao;
 
+    public KategoriDAO getKategoriDao() {
+        if (kategoriDao==null)
+            kategoriDao = new KategoriDAO();
+        return kategoriDao;
+    }
+
+    
+    
     public Brans get(int id) {
         Connection con = ConnectionManager.getConnection();
         String sql = "select * from brans where id=?";
@@ -33,7 +41,7 @@ public class BransDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                this.brans = new Brans(rs.getInt("id"), rs.getString("adi"),kategoriDao.get(rs.getInt("kategori_id")));
+                this.brans = new Brans(rs.getInt("id"), rs.getString("adi"),getKategoriDao().get(rs.getInt("kategori_id")));
             } else {
                 this.brans = null;
             }
@@ -51,7 +59,7 @@ public class BransDAO {
             ResultSet rs = st.executeQuery("select * from brans");
             while (rs.next()) {
                 this.bransList.add(new Brans(
-                        rs.getInt("id"), rs.getString("adi"),kategoriDao.get(rs.getInt("kategori_id"))
+                        rs.getInt("id"), rs.getString("adi"),getKategoriDao().get(rs.getInt("kategori_id"))
                 ));
                 System.out.println("-----------------");
             }
@@ -72,7 +80,7 @@ public class BransDAO {
             ResultSet rs = st.executeQuery("select * from brans order by id asc limit " + start + "," + pageSize);
             while (rs.next()) {
                 this.bransList.add(new Brans(
-                        rs.getInt("id"), rs.getString("adi"),kategoriDao.get(rs.getInt("kategori_id"))
+                        rs.getInt("id"), rs.getString("adi"),getKategoriDao().get(rs.getInt("kategori_id"))
                 ));
                 System.out.println("-----------------");
 

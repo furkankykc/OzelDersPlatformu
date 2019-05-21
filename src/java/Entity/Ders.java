@@ -12,10 +12,15 @@ public class Ders {
     private Brans brans;
     private User user;
     private File image;
+
     public Ders() {
     }
 
-    public Ders(String adi, int ucret,Brans brans,File image, User user) {
+    public Ders(int ucret) {
+        this.ucret = ucret;
+    }
+
+    public Ders(String adi, int ucret, Brans brans, File image, User user) {
         this.adi = adi;
         this.ucret = ucret;
         this.brans = brans;
@@ -23,7 +28,7 @@ public class Ders {
         this.user = user;
     }
 
-    public Ders(int id, String adi, int ucret,Brans brans,File image, User user) {
+    public Ders(int id, String adi, int ucret, Brans brans, File image, User user) {
         this.id = id;
         this.adi = adi;
         this.ucret = ucret;
@@ -47,7 +52,6 @@ public class Ders {
     public void setAdi(String adi) {
         this.adi = adi;
     }
-
 
     public int getUcret() {
         return ucret;
@@ -86,8 +90,6 @@ public class Ders {
         return "Ders{" + "id=" + id + ", adi=" + adi + ", ucret=" + ucret + ", brans=" + brans + ", user=" + user + ", image=" + image + '}';
     }
 
-   
-
     @Override
     public int hashCode() {
         int hash = 7;
@@ -109,9 +111,5 @@ public class Ders {
         }
         return true;
     }
-    
-    
-    
-    
-    
+
 }

@@ -58,8 +58,8 @@ CREATE TABLE IF NOT EXISTS user (
   diger varchar(1000) DEFAULT NULL,
   bakiye int(11) DEFAULT NULL,
   password varchar(500) DEFAULT NULL,
-  image_id int,
-  FOREIGN KEY (image_id) REFERENCES file(id) ON DELETE SET NULL
+  image_id int Default null,
+  FOREIGN KEY (image_id) REFERENCES file(id) ON DELETE Cascade
 
   );
 

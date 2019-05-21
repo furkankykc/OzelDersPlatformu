@@ -23,7 +23,14 @@ public class GrupDAO {
 
     private Grup grup;
     private ArrayList grupList;
-    private YetkiDAO yetkiDao = new YetkiDAO();
+    private YetkiDAO yetkiDao;
+
+    public YetkiDAO getYetkiDao() {
+        if(yetkiDao==null)
+            yetkiDao = new YetkiDAO();
+        return yetkiDao;
+    }
+    
 
     public Grup get(int id) {
         Connection con = ConnectionManager.getConnection();
@@ -34,7 +41,7 @@ public class GrupDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                this.grup = new Grup(rs.getInt("id"), rs.getString("adi"),yetkiDao.get(rs.getInt("yetki_id")));
+                this.grup = new Grup(rs.getInt("id"), rs.getString("adi"),getYetkiDao().get(rs.getInt("yetki_id")));
             } else {
                 this.grup = null;
             }
@@ -52,7 +59,7 @@ public class GrupDAO {
             ResultSet rs = st.executeQuery("select * from grup");
             while (rs.next()) {
                 this.grupList.add(new Grup(
-                        rs.getInt("id"), rs.getString("adi"),yetkiDao.get(rs.getInt("yetki_id"))
+                        rs.getInt("id"), rs.getString("adi"),getYetkiDao().get(rs.getInt("yetki_id"))
                 ));
                 System.out.println("-----------------");
 
@@ -74,7 +81,7 @@ public class GrupDAO {
             ResultSet rs = st.executeQuery("select * from grup order by id asc limit " + start + "," + pageSize);
             while (rs.next()) {
                 this.grupList.add(new Grup(
-                        rs.getInt("id"), rs.getString("adi"),yetkiDao.get(rs.getInt("yetki_id"))
+                        rs.getInt("id"), rs.getString("adi"),getYetkiDao().get(rs.getInt("yetki_id"))
                 ));
                 System.out.println("-----------------");
 

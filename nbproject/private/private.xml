@@ -3,67 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/admin/brans/brans.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Controller/DuyuruController.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/template/common/content.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Entity/Brans.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/admin/mesaj/mesaj.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Converter/BransConverter.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/template/common/header.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/test/path.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/nbproject/build-impl.xml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Converter/GrupConverter.java</file>
             <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Controller/UserController.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Validator/SaatValidator.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Validator/RequiredFieldValidator.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/DAO/GunDAO.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/test/test.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Controller/MesajController.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/template/admin/footer.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Controller/YetkiController.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/login.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Utility/FileServlet.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/register.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/template/admin/content.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Controller/KategoriController.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Converter/YetkiConverter.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/admin/yetki/yetki.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Converter/FileConverter.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/admin/user/user.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/DAO/UserDAO.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/admin/gun/gun.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/admin/ders/ders.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/DAO/FileDAO.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Entity/Yetki.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/new_index.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Controller/SaatController.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Controller/YorumController.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/DAO/BransDAO.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/DAO/YetkiDAO.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/template/admin/header.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/admin/kategori/kategori.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/DAO/MesajDAO.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/admin/duyuru/duyuru.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Utility/LoginFilter.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Controller/GrupController.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/admin/grup/grup.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Controller/GunController.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Controller/FileController.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/admin/brans/confirm_delete.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/template/layout.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Controller/BransController.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Controller/DersController.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/index.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/new_index2.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/DAO/DersDAO.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Entity/Grup.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/admin/yorum/yorum.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/admin/saat/saat.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Converter/KategoriConverter.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/admin/index.xhtml</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/admin/file/file.xhtml</file>
             <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/DAO/GrupDAO.java</file>
-            <file>file:/Users/furkankykc/Downloads/ozelDers/web/template/common/footer.xhtml</file>
+            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/DAO/FileDAO.java</file>
+            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Utility/SessionUtils.java</file>
+            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Entity/User.java</file>
+            <file>file:/Users/furkankykc/Downloads/ozelDers/web/admin/file/file.xhtml</file>
+            <file>file:/Users/furkankykc/Downloads/ozelDers/web/template/admin/header.xhtml</file>
+            <file>file:/Users/furkankykc/Downloads/ozelDers/web/template/layout.xhtml</file>
+            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Validator/SaatValidator.java</file>
+            <file>file:/Users/furkankykc/Downloads/ozelDers/web/admin/yorum/yorum.xhtml</file>
+            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/DAO/UserDAO.java</file>
+            <file>file:/Users/furkankykc/Downloads/ozelDers/src/java/Controller/FileController.java</file>
         </group>
     </open-files>
 </project-private>

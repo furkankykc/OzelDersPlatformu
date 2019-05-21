@@ -507,6 +507,7 @@ public class test {
         User admin = new User("root@mail.com", "1234");
         admin.getGrup().add(grup_admin);
         User user = new User("user@mail.com", "1234");
+
         user.getGrup().add(grup_user);
         userDao.create(admin);
         userDao.create(user);

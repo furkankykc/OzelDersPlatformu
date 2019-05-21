@@ -64,6 +64,8 @@ public class UserController implements Serializable {
     }
 
     public String create() {
+        if(this.user.getImage()!=null)
+            this.getaDao().createWithImage(this.user);
         this.getaDao().create(this.user);
         clearForm();
         return "user";

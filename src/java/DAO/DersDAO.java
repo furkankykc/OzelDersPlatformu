@@ -22,9 +22,28 @@ public class DersDAO {
 
     private Ders ders;
     private ArrayList dersList;
-    private UserDAO userDao = new UserDAO();
-    private FileDAO fileDao = new FileDAO();
-    private BransDAO bransDao = new BransDAO();
+    private UserDAO userDao;
+    private FileDAO fileDao;
+    private BransDAO bransDao;
+
+    public UserDAO getUserDao() {
+        if(userDao==null)
+            userDao = new UserDAO();
+        return userDao;
+    }
+
+    public FileDAO getFileDao() {
+        if(fileDao==null)
+            fileDao = new FileDAO();
+        return fileDao;
+    }
+
+    public BransDAO getBransDao() {
+        if(bransDao==null)
+            bransDao = new BransDAO();
+        return bransDao;
+    }
+    
     
 
     public Ders get(int id) {
@@ -36,10 +55,11 @@ public class DersDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                this.ders = new Ders(rs.getInt("id"), rs.getString("adi"), rs.getInt("ucret"),bransDao.get(rs.getInt("brans_id")),fileDao.get(rs.getInt("image_id")),userDao.get(rs.getInt("user_id")));
+                this.ders = new Ders(rs.getInt("id"), rs.getString("adi"), rs.getInt("ucret"),getBransDao().get(rs.getInt("brans_id")),getFileDao().get(rs.getInt("image_id")),getUserDao().get(rs.getInt("user_id")));
             } else {
                 this.ders = null;
             }
+            con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -54,11 +74,12 @@ public class DersDAO {
             ResultSet rs = st.executeQuery("select * from ders");
             while (rs.next()) {
                 this.dersList.add(new Ders(
-                        rs.getInt("id"), rs.getString("adi"), rs.getInt("ucret"),bransDao.get(rs.getInt("brans_id")),fileDao.get(rs.getInt("image_id")),userDao.get(rs.getInt("user_id"))
+                        rs.getInt("id"), rs.getString("adi"), rs.getInt("ucret"),getBransDao().get(rs.getInt("brans_id")),getFileDao().get(rs.getInt("image_id")),getUserDao().get(rs.getInt("user_id"))
                 ));
                 System.out.println("-----------------");
 
             }
+            con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -88,11 +109,12 @@ public class DersDAO {
             ResultSet rs = st.executeQuery("select * from ders order by id asc limit " + start + "," + pageSize);
             while (rs.next()) {
                 this.dersList.add(new Ders(
-                        rs.getInt("id"), rs.getString("adi"), rs.getInt("ucret"),bransDao.get(rs.getInt("brans_id")),fileDao.get(rs.getInt("image_id")),userDao.get(rs.getInt("user_id"))
+                        rs.getInt("id"), rs.getString("adi"), rs.getInt("ucret"),getBransDao().get(rs.getInt("brans_id")),getFileDao().get(rs.getInt("image_id")),getUserDao().get(rs.getInt("user_id"))
                 ));
                 System.out.println("-----------------");
 
             }
+            con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

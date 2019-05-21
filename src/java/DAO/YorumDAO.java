@@ -23,7 +23,14 @@ public class YorumDAO {
     private Yorum yorum;
     private ArrayList yorumList;
 
-    private final UserDAO userDao = new UserDAO();
+    private UserDAO userDao;
+
+    public UserDAO getUserDao() {
+        if (userDao == null) {
+            userDao = new UserDAO();
+        }
+        return userDao;
+    }
 
     public Yorum get(int id) {
         Connection con = ConnectionManager.getConnection();
@@ -112,7 +119,8 @@ public class YorumDAO {
             System.out.println(ex.getMessage());
         }
     }
-        public void delete(Yorum a) {
+
+    public void delete(Yorum a) {
         Connection con = ConnectionManager.getConnection();
         String sql = "delete from yorum where id=?";
         try {
@@ -146,7 +154,7 @@ public class YorumDAO {
 
         String sql = "insert into yorum (user_id, yorum) values (?,?)";
         try {
-            PreparedStatement st = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement st = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setInt(1, a.getUser().getId());
             st.setString(2, a.getYorum());
             st.executeUpdate();

@@ -6,8 +6,10 @@
 package Controller;
 
 import DAO.DersDAO;
+import DAO.UserDAO;
 import java.util.ArrayList;
 import Entity.Ders;
+import Entity.User;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -23,11 +25,13 @@ public class DersController implements Serializable {
 
     private List<Ders> dersList;
     private DersDAO dersDao;
+    private UserDAO userDao;
     private Ders ders;
 
     private int page = 1;
     private int pageSize = 10;
     private int pageCount;
+
     public DersController() {
         this.dersList = new ArrayList<Ders>();
         this.dersDao = new DersDAO();
@@ -36,6 +40,13 @@ public class DersController implements Serializable {
     public List<Ders> getaList() {
         this.dersList = getaDao().list();
         return dersList;
+    }
+
+    public UserDAO getUserDao() {
+        if (userDao == null) {
+            userDao = new UserDAO();
+        }
+        return userDao;
     }
 
     public DersDAO getaDao() {
@@ -91,6 +102,29 @@ public class DersController implements Serializable {
         clearForm();
         return "ders";
 
+    }
+
+    public boolean buy(Ders ders) {
+        try {
+            User currentUser = Utility.SessionUtils.getUser();
+            int userBakiye = currentUser.getBakiye();
+            int ucret = ders.getUcret();
+            System.out.println("Bakiye : "+userBakiye);
+            System.out.println("user : "+currentUser);
+            int diff = userBakiye - ucret;
+            if (diff >= 0) {
+                currentUser.setBakiye(diff);
+                getUserDao().update(currentUser);
+                User owner = getUserDao().get(ders.getUser().getEmail());
+                owner.setBakiye(owner.getBakiye() + ucret);
+                getUserDao().update(owner);
+
+                return true;
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return false;
     }
 
     public void next() {

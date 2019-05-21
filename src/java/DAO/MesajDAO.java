@@ -24,17 +24,24 @@ public class MesajDAO {
     private ArrayList mesajList;
     private UserDAO userDao;
 
+    public UserDAO getUserDao() {
+        if (userDao == null) {
+            userDao = new UserDAO();
+        }
+        return userDao;
+    }
+
     public Mesaj get(int id) {
         Connection con = ConnectionManager.getConnection();
         String sql = "select * from mesaj where id=?";
-        userDao = new UserDAO();
+
         try {
 
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                this.mesaj = new Mesaj(rs.getInt("id"), userDao.get(rs.getInt("gonderici_id")), userDao.get(rs.getInt("alici_id")), rs.getString("title"), rs.getString("icerik"));
+                this.mesaj = new Mesaj(rs.getInt("id"), getUserDao().get(rs.getInt("gonderici_id")), getUserDao().get(rs.getInt("alici_id")), rs.getString("title"), rs.getString("icerik"));
             } else {
                 this.mesaj = null;
             }
@@ -47,13 +54,12 @@ public class MesajDAO {
     public ArrayList<Mesaj> list() {
         this.mesajList = new ArrayList();
         Connection con = ConnectionManager.getConnection();
-        userDao = new UserDAO();
         try {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from mesaj");
             while (rs.next()) {
                 this.mesajList.add(new Mesaj(
-                        rs.getInt("id"), userDao.get(rs.getInt("gonderici_id")), userDao.get(rs.getInt("alici_id")), rs.getString("title"), rs.getString("icerik")
+                        rs.getInt("id"), getUserDao().get(rs.getInt("gonderici_id")), getUserDao().get(rs.getInt("alici_id")), rs.getString("title"), rs.getString("icerik")
                 ));
                 System.out.println("-----------------");
 
@@ -90,7 +96,7 @@ public class MesajDAO {
             ResultSet rs = st.executeQuery("select * from mesaj order by id asc limit " + start + "," + pageSize);
             while (rs.next()) {
                 this.mesajList.add(new Mesaj(
-                        rs.getInt("id"), userDao.get(rs.getInt("gonderici_id")), userDao.get(rs.getInt("alici_id")), rs.getString("title"), rs.getString("icerik")
+                        rs.getInt("id"), getUserDao().get(rs.getInt("gonderici_id")), getUserDao().get(rs.getInt("alici_id")), rs.getString("title"), rs.getString("icerik")
                 ));
                 System.out.println("-----------------");
 

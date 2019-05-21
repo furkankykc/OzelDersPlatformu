@@ -25,6 +25,11 @@
                     </a>
                 </c:if>
                 <c:if test="#{userController.isLoggedin()}">
+                    
+                    <a class="navbar-right">
+                    #{session.getAttribute("user").getBakiye()}
+                        
+                    </a>
                     <a class="navbar-right">
                     #{session.getAttribute("userid")}
                         <h:commandLink immediate="true" action="#{userController.logout()}" value="Logout"/>

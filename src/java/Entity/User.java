@@ -57,11 +57,7 @@ public class User {
         this.meslek = meslek;
         this.diger = diger;
         this.password = password;
-        if (image != null) {
             this.image = image;
-        } else {
-            this.image = new File();
-        }
         if (grup != null) {
             this.grup = grup;
         } else {
@@ -83,11 +79,8 @@ public class User {
         this.diger = diger;
         this.password = password;
 
-        if (image != null) {
             this.image = image;
-        } else {
-            this.image = new File();
-        }
+       
         if (grup != null) {
             this.grup = grup;
         } else {
