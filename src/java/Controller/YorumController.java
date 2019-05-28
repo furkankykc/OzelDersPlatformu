@@ -24,7 +24,7 @@ public class YorumController implements Serializable {
     private List<Yorum> yorumList;
     private YorumDAO yorumDao;
     private Yorum yorum;
-    
+    private String display = "";
     private int page = 1;
     private int pageSize = 10;
     private int pageCount;
@@ -34,8 +34,32 @@ public class YorumController implements Serializable {
         this.yorumDao = new YorumDAO();
     }
 
+ public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
+    
+    public ArrayList<Yorum> search() {
+        ArrayList<Yorum> resultList = new ArrayList<Yorum>();
+        for (Yorum yorum : this.yorumList) {
+            if (yorum.getYorum().toLowerCase().startsWith(display.toLowerCase())) {
+                resultList.add(yorum);
+            }
+        }
+
+        return resultList;
+    }
+
     public List<Yorum> getaList() {
-        this.yorumList = getaDao().list(page,pageSize);
+        this.yorumList = getaDao().list(page, pageSize);
+        if (display != "" || display != null) {
+            this.yorumList = this.search();
+        }
+        System.out.println("|||"+this.yorumList);
         return yorumList;
     }
 

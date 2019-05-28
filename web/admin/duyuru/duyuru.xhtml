@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <h:head>
 
@@ -19,19 +20,21 @@
                     <div class="row">
                         <div class="col-md-6">
                             <h:form id="ajax-table">
-                                     <div class="container">
-                                    <div class="form-check-inline">
+                                <div id="search-panel">
+                                    <h:inputText autocomplete="off" value="#{duyuruController.display}">
+                                        <f:passThroughAttribute name="placeHolder" value="Search ..."/>
+                                        <f:ajax event="keyup" listener="#{duyuruController.getaList()}" execute="@this" render="template-form:ajax-table:data-table" />
+                                    </h:inputText>
 
-                                        <h:commandButton action="#{bransController.previous}" value="Previous" styleClass="btn btn-outline-dark">
-                                            <f:ajax execute="@this" render="template-form"/>
-                                        </h:commandButton>
-                                        <h:outputLabel  value="#{bransController.page} of #{bransController.pageCount}" styleClass="text textArea"/>
-                                        <h:commandButton action="#{bransController.next}" value="Next" styleClass="btn btn-outline-dark">
-                                            <f:ajax execute="@this" render="template-form"/>
-                                        </h:commandButton>
-                                    </div>
+                                    <h:commandButton action="#{duyuruController.previous}" value="Previous" styleClass="btn btn-outline-dark">
+                                        <f:ajax execute="@this" render="template-form"/>
+                                    </h:commandButton>
+                                    <h:outputLabel  value="#{duyuruController.page} of #{duyuruController.pageCount}" styleClass="text textArea"/>
+                                    <h:commandButton action="#{duyuruController.next}" value="Next" styleClass="btn btn-outline-dark">
+                                        <f:ajax execute="@this" render="template-form"/>
+                                    </h:commandButton>
                                 </div>
-                                <h:dataTable   rendered="#{userController.yetki.read}" value="#{duyuruController.getaList()}" var="aDuyuru" styleClass="table table-stripped">
+                                <h:dataTable id="data-table"  rendered="#{userController.yetki.read}" value="#{duyuruController.getaList()}" var="aDuyuru" styleClass="table table-stripped">
                                     <h:column>
                                         <f:facet name="header">ID</f:facet>
                                             #{aDuyuru.id}
@@ -47,12 +50,15 @@
                                         <f:facet name="header">İçerik</f:facet>
                                             #{aDuyuru.icerik}
                                     </h:column>
-                                    <h:column>
-                                        <f:facet name="header">DELETE</f:facet>
+                                    <c:if test="#{userController.yetki.delete}">
+                                        <h:column>
+                                            <f:facet name="header">DELETE</f:facet>
 
-                                        <h:commandButton styleClass="btn btn-danger"  disabled="#{!userController.yetki.delete}" action="#{duyuruController.delete(aDuyuru)}" value="Delete" />
+                                            <h:commandButton styleClass="btn btn-danger"  disabled="#{!userController.yetki.delete}" action="#{duyuruController.delete(aDuyuru)}" value="Delete" />
 
-                                    </h:column>
+                                        </h:column>
+                                    </c:if>
+
                                 </h:dataTable>
                             </h:form>
                         </div>

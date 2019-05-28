@@ -32,7 +32,7 @@ public class FileController implements Serializable {
     private FileDAO fileDao;
     private File file;
     private Part part;
-
+    private String display = "";
     private int page = 1;
     private int pageSize = 10;
     private int pageCount;
@@ -83,8 +83,32 @@ public class FileController implements Serializable {
         this.fileDao = new FileDAO();
     }
 
+   public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
+    
+    public ArrayList<File> search() {
+        ArrayList<File> resultList = new ArrayList<File>();
+        for (File file : this.fileList) {
+            if (file.getAdi().toLowerCase().startsWith(display.toLowerCase())) {
+                resultList.add(file);
+            }
+        }
+
+        return resultList;
+    }
+
     public List<File> getaList() {
         this.fileList = getaDao().list(page, pageSize);
+        if (display != "" || display != null) {
+            this.fileList = this.search();
+        }
+        System.out.println("|||"+this.fileList);
         return fileList;
     }
 

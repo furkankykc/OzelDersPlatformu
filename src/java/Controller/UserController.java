@@ -30,7 +30,7 @@ public class UserController implements Serializable {
     private User user;
     private String passControll;
     private String message;
-    
+    private String display = "";
     private int page = 1;
     private int pageSize = 10;
     private int pageCount;
@@ -40,11 +40,34 @@ public class UserController implements Serializable {
         this.userDao = new UserDAO();
     }
 
-    public List<User> getaList() {
-        this.userList = getaDao().list(page,pageSize);
-        return userList;
+ public String getDisplay() {
+        return display;
     }
 
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
+    
+    public ArrayList<User> search() {
+        ArrayList<User> resultList = new ArrayList<User>();
+        for (User user : this.userList) {
+            if (user.getIsim().toLowerCase().startsWith(display.toLowerCase())) {
+                resultList.add(user);
+            }
+        }
+
+        return resultList;
+    }
+
+    public List<User> getaList() {
+        this.userList = getaDao().list(page, pageSize);
+        if (display != "" || display != null) {
+            this.userList = this.search();
+        }
+        System.out.println("|||"+this.userList);
+        return userList;
+    }
     public UserDAO getaDao() {
         if (this.userDao == null) {
             this.userDao = new UserDAO();

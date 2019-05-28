@@ -24,7 +24,7 @@ public class KategoriController implements Serializable {
     private List<Kategori> kategoriList;
     private KategoriDAO kategoriDao;
     private Kategori kategori;
-
+    private String display = "";
     private int page = 1;
     private int pageSize = 10;
     private int pageCount;
@@ -34,10 +34,34 @@ public class KategoriController implements Serializable {
         this.kategoriDao = new KategoriDAO();
     }
 
-    public List<Kategori> getaList() {
-        this.kategoriList = getaDao().list(page,pageSize);
-        return kategoriList;
+ public String getDisplay() {
+        return display;
     }
+
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
+    
+    public ArrayList<Kategori> search() {
+        ArrayList<Kategori> resultList = new ArrayList<Kategori>();
+        for (Kategori kategori : this.kategoriList) {
+            if (kategori.getAdi().toLowerCase().startsWith(display.toLowerCase())) {
+                resultList.add(kategori);
+            }
+        }
+
+        return resultList;
+    }
+
+    public List<Kategori> getaList() {
+        this.kategoriList = getaDao().list(page, pageSize);
+        if (display != "" || display != null) {
+            this.kategoriList = this.search();
+        }
+        System.out.println("|||"+this.kategoriList);
+        return kategoriList;
+    }   
 
     public KategoriDAO getaDao() {
         if (this.kategoriDao == null) {

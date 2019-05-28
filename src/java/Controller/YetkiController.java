@@ -24,7 +24,7 @@ public class YetkiController implements Serializable {
     private List<Yetki> yetkiList;
     private YetkiDAO yetkiDao;
     private Yetki yetki;
-    
+    private String display = "";
     private int page = 1;
     private int pageSize = 10;
     private int pageCount;
@@ -34,11 +34,34 @@ public class YetkiController implements Serializable {
         this.yetkiDao = new YetkiDAO();
     }
 
-    public List<Yetki> getaList() {
-        this.yetkiList = getaDao().list(page,pageSize);
-        return yetkiList;
+ public String getDisplay() {
+        return display;
     }
 
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
+    
+    public ArrayList<Yetki> search() {
+        ArrayList<Yetki> resultList = new ArrayList<Yetki>();
+        for (Yetki yetki : this.yetkiList) {
+            if (yetki.getTabloAdi().toLowerCase().startsWith(display.toLowerCase())) {
+                resultList.add(yetki);
+            }
+        }
+
+        return resultList;
+    }
+
+    public List<Yetki> getaList() {
+        this.yetkiList = getaDao().list(page, pageSize);
+        if (display != "" || display != null) {
+            this.yetkiList = this.search();
+        }
+        System.out.println("|||"+this.yetkiList);
+        return yetkiList;
+    }
     public YetkiDAO getaDao() {
         if (this.yetkiDao == null) {
             this.yetkiDao = new YetkiDAO();

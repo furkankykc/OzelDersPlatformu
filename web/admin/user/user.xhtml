@@ -20,19 +20,21 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h:form id="ajax-table">
-                                <div class="container">
-                                    <div class="form-check-inline">
+                                <div id="search-panel">
+                                    <h:inputText autocomplete="off" value="#{userController.display}">
+                                        <f:passThroughAttribute name="placeHolder" value="Search ..."/>
+                                        <f:ajax event="keyup" listener="#{userController.getaList()}" execute="@this" render="template-form:ajax-table:data-table" />
+                                    </h:inputText>
 
-                                        <h:commandButton action="#{userController.previous}" value="Previous" styleClass="btn btn-outline-dark">
-                                            <f:ajax execute="@this" render="template-form"/>
-                                        </h:commandButton>
-                                        <h:outputLabel  value="#{userController.page} of #{userController.pageCount}" styleClass="text textArea"/>
-                                        <h:commandButton action="#{userController.next}" value="Next" styleClass="btn btn-outline-dark">
-                                            <f:ajax execute="@this" render="template-form"/>
-                                        </h:commandButton>
-                                    </div>
+                                    <h:commandButton action="#{userController.previous}" value="Previous" styleClass="btn btn-outline-dark">
+                                        <f:ajax execute="@this" render="template-form"/>
+                                    </h:commandButton>
+                                    <h:outputLabel  value="#{userController.page} of #{userController.pageCount}" styleClass="text textArea"/>
+                                    <h:commandButton action="#{userController.next}" value="Next" styleClass="btn btn-outline-dark">
+                                        <f:ajax execute="@this" render="template-form"/>
+                                    </h:commandButton>
                                 </div>
-                                <h:dataTable  rendered="#{userController.yetki.read}" value="#{userController.getaList()}" var="aUser" styleClass="table table-stripped">
+                                <h:dataTable id="data-table" rendered="#{userController.yetki.read}" value="#{userController.getaList()}" var="aUser" styleClass="table table-stripped">
                                     <h:column>
                                         <f:facet name="header">ID</f:facet>
                                             #{aUser.id}
@@ -90,13 +92,15 @@
                                             </ul>
                                         </ui:repeat>
                                     </h:column>
+                                    <c:if test="#{userController.yetki.delete}">
 
-                                    <h:column>
-                                        <f:facet name="header">DELETE</f:facet>
+                                        <h:column>
+                                            <f:facet name="header">DELETE</f:facet>
 
-                                        <h:commandButton styleClass="btn btn-danger"  disabled="#{!userController.superAdmin}" action="#{userController.delete(aUser)}" value="Delete" />
+                                            <h:commandButton styleClass="btn btn-danger"  disabled="#{!userController.superAdmin}" action="#{userController.delete(aUser)}" value="Delete" />
 
-                                    </h:column>
+                                        </h:column>
+                                    </c:if>
                                 </h:dataTable>
                             </h:form>
                         </div>

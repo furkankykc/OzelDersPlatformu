@@ -24,7 +24,7 @@ public class GrupController implements Serializable {
     private List<Grup> grupList;
     private GrupDAO grupDao;
     private Grup grup;
-    
+    private String display = "";
     private int page = 1;
     private int pageSize = 10;
     private int pageCount;
@@ -33,12 +33,34 @@ public class GrupController implements Serializable {
         this.grupList = new ArrayList<Grup>();
         this.grupDao = new GrupDAO();
     }
-
-    public List<Grup> getaList() {
-        this.grupList = getaDao().list(page,pageSize);
-        return grupList;
+ public String getDisplay() {
+        return display;
     }
 
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
+    
+    public ArrayList<Grup> search() {
+        ArrayList<Grup> resultList = new ArrayList<Grup>();
+        for (Grup grup : this.grupList) {
+            if (grup.getAdi().toLowerCase().startsWith(display.toLowerCase())) {
+                resultList.add(grup);
+            }
+        }
+
+        return resultList;
+    }
+
+    public List<Grup> getaList() {
+        this.grupList = getaDao().list(page, pageSize);
+        if (display != "" || display != null) {
+            this.grupList = this.search();
+        }
+        System.out.println("|||"+this.grupList);
+        return grupList;
+    }
     public GrupDAO getaDao() {
         if (this.grupDao == null) {
             this.grupDao = new GrupDAO();

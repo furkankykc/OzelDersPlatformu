@@ -24,7 +24,7 @@ public class MesajController implements Serializable {
     private List<Mesaj> mesajList;
     private MesajDAO mesajDao;
     private Mesaj mesaj;
-    
+    private String display = "";
     private int page = 1;
     private int pageSize = 10;
     private int pageCount;
@@ -34,8 +34,32 @@ public class MesajController implements Serializable {
         this.mesajDao = new MesajDAO();
     }
 
+  public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
+    
+    public ArrayList<Mesaj> search() {
+        ArrayList<Mesaj> resultList = new ArrayList<Mesaj>();
+        for (Mesaj mesaj : this.mesajList) {
+            if (mesaj.getTitle().toLowerCase().startsWith(display.toLowerCase())) {
+                resultList.add(mesaj);
+            }
+        }
+
+        return resultList;
+    }
+
     public List<Mesaj> getaList() {
-        this.mesajList = getaDao().list(page,pageSize);
+        this.mesajList = getaDao().list(page, pageSize);
+        if (display != "" || display != null) {
+            this.mesajList = this.search();
+        }
+        System.out.println("|||"+this.mesajList);
         return mesajList;
     }
 

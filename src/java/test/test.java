@@ -522,43 +522,44 @@ public class test {
 //        arrayList.add(new Grup(1,"asdasd"));
 //        arrayList.add(new Grup(2,"asdasd"));
 //        a.setGrup(arrayList);
-//        a.setIsim("furkan");
+//        a.setIsim("ff");
 ////        udao.create(a);
-        String str = "";
-        if (test_BransDAO()) {
-            str += "TEST SUCCESSFULL FOR BransDAO\n";
-        }
-        if (test_DersDAO()) {
-            str += "TEST SUCCESSFULL FOR DersDAO\n";
-        }
-        if (test_DuyuruDAO()) {
-            str += "TEST SUCCESSFULL FOR DuyuruDAO\n";
-        }
-        if (test_FileDAO()) {
-            str += "TEST SUCCESSFULL FOR FileDAO\n";
-        }
-        if (test_GrupDAO()) {
-            str += "TEST SUCCESSFULL FOR GrupDAO\n";
-        }
-        if (test_KategoriDAO()) {
-            str += "TEST SUCCESSFULL FOR KategoriDAO\n";
-        }
-        if (test_MesajDAO()) {
-            str += "TEST SUCCESSFULL FOR MesajDAO\n";
-        }
-        if (test_SaatDAO()) {
-            str += "TEST SUCCESSFULL FOR SaatDAO\n";
-        }
-        if (test_YetkiDAO()) {
-            str += "TEST SUCCESSFULL FOR YetkiDAO\n";
-        }
-        if (test_YorumDAO()) {
-            str += "TEST SUCCESSFULL FOR YorumDAO\n";
-        }
-        System.out.println(str);
-        initializeDB();
+//        String str = "";
+//        if (test_BransDAO()) {
+//            str += "TEST SUCCESSFULL FOR BransDAO\n";
+//        }
+//        if (test_DersDAO()) {
+//            str += "TEST SUCCESSFULL FOR DersDAO\n";
+//        }
+//        if (test_DuyuruDAO()) {
+//            str += "TEST SUCCESSFULL FOR DuyuruDAO\n";
+//        }
+//        if (test_FileDAO()) {
+//            str += "TEST SUCCESSFULL FOR FileDAO\n";
+//        }
+//        if (test_GrupDAO()) {
+//            str += "TEST SUCCESSFULL FOR GrupDAO\n";
+//        }
+//        if (test_KategoriDAO()) {
+//            str += "TEST SUCCESSFULL FOR KategoriDAO\n";
+//        }
+//        if (test_MesajDAO()) {
+//            str += "TEST SUCCESSFULL FOR MesajDAO\n";
+//        }
+//        if (test_SaatDAO()) {
+//            str += "TEST SUCCESSFULL FOR SaatDAO\n";
+//        }
+//        if (test_YetkiDAO()) {
+//            str += "TEST SUCCESSFULL FOR YetkiDAO\n";
+//        }
+//        if (test_YorumDAO()) {
+//            str += "TEST SUCCESSFULL FOR YorumDAO\n";
+//        }
+//        System.out.println(str);
+//        initializeDB();
         User u = new UserDAO().get("root");
         u.setEmail("root@mail.com");
+        System.out.println(u.getGrup());
         new UserDAO().update(u);
     }
 

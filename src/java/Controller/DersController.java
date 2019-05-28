@@ -27,7 +27,7 @@ public class DersController implements Serializable {
     private DersDAO dersDao;
     private UserDAO userDao;
     private Ders ders;
-
+    private String display = "";
     private int page = 1;
     private int pageSize = 10;
     private int pageCount;
@@ -37,8 +37,32 @@ public class DersController implements Serializable {
         this.dersDao = new DersDAO();
     }
 
+   public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
+    
+    public ArrayList<Ders> search() {
+        ArrayList<Ders> resultList = new ArrayList<Ders>();
+        for (Ders ders : this.dersList) {
+            if (ders.getAdi().toLowerCase().startsWith(display.toLowerCase())) {
+                resultList.add(ders);
+            }
+        }
+
+        return resultList;
+    }
+
     public List<Ders> getaList() {
-        this.dersList = getaDao().list();
+        this.dersList = getaDao().list(page, pageSize);
+        if (display != "" || display != null) {
+            this.dersList = this.search();
+        }
+        System.out.println("|||"+this.dersList);
         return dersList;
     }
 

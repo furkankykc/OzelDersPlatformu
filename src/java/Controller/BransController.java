@@ -24,18 +24,42 @@ public class BransController implements Serializable {
     private List<Brans> bransList;
     private BransDAO bransDao;
     private Brans brans;
-
     private int page = 1;
     private int pageSize = 10;
     private int pageCount;
+    private String display = "";
 
     public BransController() {
         this.bransList = new ArrayList<Brans>();
         this.bransDao = new BransDAO();
     }
 
+    public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
+    
+    public ArrayList<Brans> search() {
+        ArrayList<Brans> resultList = new ArrayList<Brans>();
+        for (Brans brans : this.bransList) {
+            if (brans.getAdi().toLowerCase().startsWith(display.toLowerCase())) {
+                resultList.add(brans);
+            }
+        }
+
+        return resultList;
+    }
+
     public List<Brans> getaList() {
-        this.bransList = getaDao().list(page,pageSize);
+        this.bransList = getaDao().list(page, pageSize);
+        if (display != "" || display != null) {
+            this.bransList = this.search();
+        }
+        System.out.println("|||"+this.bransList);
         return bransList;
     }
 

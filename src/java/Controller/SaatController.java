@@ -21,76 +21,99 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class SaatController implements Serializable {
 
-    private List<Saat> bransList;
-    private SaatDAO bransDao;
-    private Saat brans;
-    
+    private List<Saat> saatList;
+    private SaatDAO saatDao;
+    private Saat saat;
+    private String display = "";
     private int page = 1;
     private int pageSize = 10;
     private int pageCount;
     public SaatController() {
-        this.bransList = new ArrayList<Saat>();
-        this.bransDao = new SaatDAO();
+        this.saatList = new ArrayList<Saat>();
+        this.saatDao = new SaatDAO();
+    }
+
+ public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
+    
+    public ArrayList<Saat> search() {
+        ArrayList<Saat> resultList = new ArrayList<Saat>();
+        for (Saat saat : this.saatList) {
+            if (saat.getSaat().toLowerCase().startsWith(display.toLowerCase())) {
+                resultList.add(saat);
+            }
+        }
+
+        return resultList;
     }
 
     public List<Saat> getaList() {
-        this.bransList = getaDao().list(page,pageSize);
-        return bransList;
-    }
-
-    public SaatDAO getaDao() {
-        if (this.bransDao == null) {
-            this.bransDao = new SaatDAO();
+        this.saatList = getaDao().list(page, pageSize);
+        if (display != "" || display != null) {
+            this.saatList = this.search();
         }
-        return bransDao;
+        System.out.println("|||"+this.saatList);
+        return saatList;
+    }
+    public SaatDAO getaDao() {
+        if (this.saatDao == null) {
+            this.saatDao = new SaatDAO();
+        }
+        return saatDao;
     }
 
     public Saat getSaat() {
-        if (this.brans == null) {
-            this.brans = new Saat();
+        if (this.saat == null) {
+            this.saat = new Saat();
         }
-        return brans;
+        return saat;
     }
 
-    public void setSaat(Saat brans) {
-        this.brans = brans;
+    public void setSaat(Saat saat) {
+        this.saat = saat;
     }
 
     public String create() {
 
-        this.getaDao().create(this.brans);
+        this.getaDao().create(this.saat);
         clearForm();
-        return "brans";
+        return "saat";
     }
 
-    public String updateForm(Saat brans) {
-        this.brans = brans;
-        return "brans";
+    public String updateForm(Saat saat) {
+        this.saat = saat;
+        return "saat";
     }
 
     public void clearForm() {
-        this.brans = new Saat();
+        this.saat = new Saat();
 
     }
 
     public String update() {
-        this.bransDao.update(this.brans);
+        this.saatDao.update(this.saat);
         this.clearForm();
-        return "brans";
+        return "saat";
     }
 
-    public String delete(Saat brans) {
-        this.brans = brans;
+    public String delete(Saat saat) {
+        this.saat = saat;
        
         return "confirm_delete";
 
     }
 
     public String delete() {
-        this.brans = brans;
-        this.getaDao().delete(brans.getId());
+        this.saat = saat;
+        this.getaDao().delete(saat.getId());
         clearForm();
-        return "brans";
+        return "saat";
 
     }
 

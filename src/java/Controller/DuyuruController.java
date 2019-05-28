@@ -24,7 +24,7 @@ public class DuyuruController implements Serializable {
     private List<Duyuru> duyuruList;
     private DuyuruDAO duyuruDao;
     private Duyuru duyuru;
-
+    private String display = "";
     private int page = 1;
     private int pageSize = 10;
     private int pageCount;
@@ -33,11 +33,34 @@ public class DuyuruController implements Serializable {
         this.duyuruDao = new DuyuruDAO();
     }
 
-    public List<Duyuru> getaList() {
-        this.duyuruList = getaDao().list(page,pageSize);
-        return duyuruList;
+     public String getDisplay() {
+        return display;
     }
 
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
+    
+    public ArrayList<Duyuru> search() {
+        ArrayList<Duyuru> resultList = new ArrayList<Duyuru>();
+        for (Duyuru duyuru : this.duyuruList) {
+            if (duyuru.getBaslik().toLowerCase().startsWith(display.toLowerCase())) {
+                resultList.add(duyuru);
+            }
+        }
+
+        return resultList;
+    }
+
+    public List<Duyuru> getaList() {
+        this.duyuruList = getaDao().list(page, pageSize);
+        if (display != "" || display != null) {
+            this.duyuruList = this.search();
+        }
+        System.out.println("|||"+this.duyuruList);
+        return duyuruList;
+    }
     public DuyuruDAO getaDao() {
         if (this.duyuruDao == null) {
             this.duyuruDao = new DuyuruDAO();

@@ -24,7 +24,7 @@ public class GunController implements Serializable {
     private List<Gun> gunList;
     private GunDAO gunDao;
     private Gun gun;
-
+    private String display = "";
     private int page = 1;
     private int pageSize = 10;
     private int pageCount;
@@ -34,11 +34,34 @@ public class GunController implements Serializable {
         this.gunDao = new GunDAO();
     }
 
-    public List<Gun> getaList() {
-        this.gunList = getaDao().list(page,pageSize);
-        return gunList;
+ public String getDisplay() {
+        return display;
     }
 
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
+    
+    public ArrayList<Gun> search() {
+        ArrayList<Gun> resultList = new ArrayList<Gun>();
+        for (Gun gun : this.gunList) {
+            if (gun.getAdi().toLowerCase().startsWith(display.toLowerCase())) {
+                resultList.add(gun);
+            }
+        }
+
+        return resultList;
+    }
+
+    public List<Gun> getaList() {
+        this.gunList = getaDao().list(page, pageSize);
+        if (display != "" || display != null) {
+            this.gunList = this.search();
+        }
+        System.out.println("|||"+this.gunList);
+        return gunList;
+    }
     public GunDAO getaDao() {
         if (this.gunDao == null) {
             this.gunDao = new GunDAO();
