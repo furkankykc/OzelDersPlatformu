@@ -34,7 +34,7 @@
                                         <f:ajax execute="@this" render="template-form"/>
                                     </h:commandButton>
                                 </div>
-                                <h:dataTable id="data-table"rendered="#{userController.yetki.read}" value="#{gunController.getaList()}" var="aGun" styleClass="table table-stripped">
+                                <h:dataTable id="data-table" rendered="#{userController.yetki.read}" value="#{gunController.getaList()}" var="aGun" styleClass="table table-stripped">
                                     <h:column>
                                         <f:facet name="header">ID</f:facet>
                                             #{aGun.id}

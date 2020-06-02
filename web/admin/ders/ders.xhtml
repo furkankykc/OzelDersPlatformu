@@ -89,7 +89,7 @@
                                     <h:inputText styleClass="form-control" value="#{dersController.ders.ucret}"/> <br/>
                                     <label for="inputName">Brans </label>
                                     <h:selectOneMenu styleClass="custom-select" value="#{dersController.ders.brans}" converter="bransConverter">
-                                        <f:selectItems value="#{brans.getaList()}" var="brans" itemValue="#{brans}" itemLabel="#{brans.adi}"/>
+                                        <f:selectItems value="#{bransController.getaList()}" var="brans" itemValue="#{brans}" itemLabel="#{brans.adi}"/>
                                     </h:selectOneMenu>
                                     <label for="inputName">User </label>
                                     <h:selectOneMenu styleClass="custom-select" value="#{dersController.ders.user}" converter="userConverter">

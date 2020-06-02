@@ -195,7 +195,7 @@ public class UserController implements Serializable {
   
             } else {
 
-                message = "Şifrelen yanlış";
+                message = "Şifren yanlış";
                 //sifre yanlis
                 return "";
             }
